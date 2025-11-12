@@ -1,0 +1,297 @@
+[
+  {
+    "name": "Washington State University Veterinary Teaching Hospital",
+    "phone": "+15093350711",
+    "coverage": ["All of Eastern Washington"],
+    "animal_types": ["wildlife", "domestic", "livestock"],
+    "services": [
+      "veterinary_emergency",
+      "critical_care",
+      "general_wildlife_rehab"
+    ],
+    "hours": "24/7",
+    "notes": "Located in Pullman. The primary facility for comprehensive wildlife care in the region. Handles all species. Advise callers to phone ahead."
+  },
+  {
+    "name": "WDFW Eastern Region (Region 1) Office",
+    "phone": "+15098921001",
+    "coverage": [
+      "Ferry",
+      "Stevens",
+      "Pend Oreille",
+      "Lincoln",
+      "Spokane",
+      "Whitman",
+      "Garfield",
+      "Columbia",
+      "Walla Walla",
+      "Asotin"
+    ],
+    "animal_types": ["wildlife"],
+    "services": ["law_enforcement", "wildlife_conflict", "information"],
+    "hours": "Mon-Fri, 8 AM - 4:30 PM",
+    "notes": "For non-emergency wildlife issues (e.g., nuisance animals, questions). For emergencies after hours, direct callers to WDFW Enforcement dispatch or 911."
+  },
+  {
+    "name": "WDFW North Central Region (Region 2) Office",
+    "phone": "+15097544624",
+    "coverage": ["Okanogan", "Chelan", "Douglas", "Grant", "Adams"],
+    "animal_types": ["wildlife"],
+    "services": ["law_enforcement", "wildlife_conflict", "information"],
+    "hours": "Mon-Fri, 8 AM - 4:30 PM",
+    "notes": "For non-emergency wildlife issues (e.g., nuisance animals, questions). For emergencies after hours, direct callers to WDFW Enforcement dispatch or 911."
+  },
+  {
+    "name": "WDFW Enforcement Dispatch",
+    "phone": "+13609022936",
+    "coverage": ["Statewide"],
+    "animal_types": ["wildlife"],
+    "services": ["law_enforcement", "poaching_report", "dangerous_wildlife"],
+    "hours": "24/7",
+    "notes": "For reporting poaching, dangerous wildlife encounters, or when a wildlife officer is needed after hours. For immediate public safety threats, call 911 first."
+  },
+  {
+    "name": "Central Washington Wildlife Hospital",
+    "phone": "+15094507016",
+    "coverage": [
+      "Kittitas County",
+      "Yakima County",
+      "Chelan County",
+      "Douglas County",
+      "Grant County"
+    ],
+    "animal_types": ["wildlife"],
+    "services": ["small_mammal_rehab", "bird_rehab", "reptile_rehab"],
+    "hours": "Varies, call for information and to arrange drop-off.",
+    "notes": "Located near Ellensburg. Does not handle large mammals like deer, bears, or cougars. Call before bringing an animal."
+  },
+  {
+    "name": "Blue Mountain Wildlife",
+    "phone": "+15412780215",
+    "coverage": ["Southeastern Washington", "Northeastern Oregon"],
+    "animal_types": ["wildlife"],
+    "services": ["raptor_rehab", "bird_rehab"],
+    "hours": "8 AM - 6 PM daily, call first.",
+    "notes": "Located in Pendleton, OR, but serves SE Washington. Specializes in birds of prey and other avian species. Excellent resource for injured raptors."
+  },
+  {
+    "name": "Spokane County Regional Animal Protection Service (SCRAPS)",
+    "phone": "+15094772984",
+    "coverage": ["Spokane County"],
+    "animal_types": ["domestic"],
+    "services": ["animal_control", "stray_animal_intake"],
+    "hours": "Field operations 24/7 for emergencies. Shelter hours vary.",
+    "notes": "Primarily for domestic animals (dogs, cats). Not equipped for wildlife, but their officers respond to public safety issues involving animals."
+  },
+  {
+    "name": "Wenatchee Valley Humane Society",
+    "phone": "+15096629577",
+    "coverage": ["Chelan County", "Douglas County"],
+    "animal_types": ["domestic", "wildlife"],
+    "services": [
+      "animal_control",
+      "stray_animal_intake",
+      "limited_wildlife_intake"
+    ],
+    "hours": "Varies, call for information.",
+    "notes": "Contracts for animal control in several local cities. Can assist with or direct calls for certain small mammals or birds. Call for capabilities."
+  },
+  {
+    "name": "Okanogan County Sheriff's Office - Animal Control",
+    "phone": "+15094227300",
+    "coverage": ["Okanogan County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Handles domestic animal and livestock issues (e.g., dogs at large, neglect). For wildlife issues, contact WDFW."
+  },
+  {
+    "name": "Grant County Animal Control (Sheriff's Office)",
+    "phone": "+15097621160",
+    "coverage": ["Grant County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Handles domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Adams County Sheriff's Office",
+    "phone": "+15096591818",
+    "coverage": ["Adams County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Whitman County Sheriff's Office",
+    "phone": "+15093976266",
+    "coverage": ["Whitman County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW or WSU."
+  },
+  {
+    "name": "Pontarosa Veterinary Clinic",
+    "phone": "+15096845484",
+    "coverage": ["Stevens County", "Ferry County", "Pend Oreille County"],
+    "animal_types": ["domestic", "livestock", "wildlife"],
+    "services": ["veterinary_services", "wildlife_stabilization"],
+    "hours": "Mon-Fri, 8 AM - 5:30 PM; Sat, 8 AM - 12 PM",
+    "notes": "Located in Colville. Can stabilize injured wildlife before transfer to a licensed rehabilitator. Call ahead."
+  },
+  {
+    "name": "Ferry County Sheriff's Office",
+    "phone": "+15097753132",
+    "coverage": ["Ferry County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Pend Oreille County Sheriff's Office - Animal Control",
+    "phone": "+15094473151",
+    "coverage": ["Pend Oreille County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "Mon-Fri, 8 AM - 4 PM. After hours via dispatch.",
+    "notes": "Handles domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Lincoln County Sheriff's Office",
+    "phone": "+15097253501",
+    "coverage": ["Lincoln County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Garfield County Sheriff's Office",
+    "phone": "+15098432242",
+    "coverage": ["Garfield County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Columbia County Sheriff's Office",
+    "phone": "+15093822518",
+    "coverage": ["Columbia County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Walla Walla County Sheriff's Office",
+    "phone": "+15095245400",
+    "coverage": ["Walla Walla County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Primary contact for domestic animal and livestock issues. For wildlife, contact WDFW."
+  },
+  {
+    "name": "Asotin County Animal Shelter",
+    "phone": "+15097582136",
+    "coverage": ["Asotin County"],
+    "animal_types": ["domestic"],
+    "services": ["stray_animal_intake", "adoption"],
+    "hours": "Varies, call for information.",
+    "notes": "Located in Clarkston. Focuses on domestic pets. For animal control, call Sheriff's office."
+  },
+  {
+    "name": "Washington State Patrol",
+    "phone": "911",
+    "coverage": ["Statewide"],
+    "animal_types": ["wildlife", "livestock"],
+    "services": ["emergency_response", "highway_safety"],
+    "hours": "24/7",
+    "notes": "Use for immediate public safety threats only, such as large animals on major highways (e.g., deer, elk, cattle on interstate)."
+  },
+  {
+    "name": "Pet Emergency Clinic & Referral Center (Spokane)",
+    "phone": "+15093266670",
+    "coverage": ["Spokane area", "Northern Idaho"],
+    "animal_types": ["domestic"],
+    "services": ["veterinary_emergency", "critical_care"],
+    "hours": "24/7",
+    "notes": "Primarily for domestic pets. May stabilize critical wildlife on a case-by-case basis before transfer to a licensed rehabber. Call first."
+  },
+  {
+    "name": "Animal Hospital of Omak",
+    "phone": "+15098265800",
+    "coverage": ["Okanogan County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["veterinary_emergency", "veterinary_services"],
+    "hours": "24/7 for Emergencies",
+    "notes": "Provides 24/7 emergency vet care for domestic and large animals in the Omak area."
+  },
+  {
+    "name": "Washington State Department of Health Rabies Info",
+    "phone": "+18002314476",
+    "coverage": ["Statewide"],
+    "animal_types": ["wildlife", "domestic"],
+    "services": ["information", "rabies_risk_assessment"],
+    "hours": "24/7",
+    "notes": "For questions about potential rabies exposure from an animal bite (e.g., bat, raccoon, coyote). This is an informational hotline, not a rescue service."
+  },
+  {
+    "name": "Inland Northwest Wildlife Council",
+    "phone": "+15094878552",
+    "coverage": ["Spokane area"],
+    "animal_types": ["wildlife"],
+    "services": ["information", "advocacy"],
+    "hours": "Varies, call for information.",
+    "notes": "Not a direct rehab or rescue organization, but a knowledgeable source for information and referrals in the Spokane area."
+  },
+  {
+    "name": "Chewelah Veterinary Clinic",
+    "phone": "+15099356424",
+    "coverage": ["Stevens County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["veterinary_services"],
+    "hours": "Mon-Fri, 8 AM - 5 PM",
+    "notes": "General veterinary services. May provide stabilization for wildlife during business hours. Call first."
+  },
+  {
+    "name": "Davenport Veterinary Clinic",
+    "phone": "+15097257333",
+    "coverage": ["Lincoln County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["veterinary_services"],
+    "hours": "Mon-Fri, 8 AM - 5 PM",
+    "notes": "General veterinary services. May provide stabilization for wildlife during business hours. Call first."
+  },
+  {
+    "name": "Alpine Veterinary Clinic",
+    "phone": "+15092356161",
+    "coverage": ["Spokane County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["veterinary_services"],
+    "hours": "Varies, call for information.",
+    "notes": "Located in Cheney. General veterinary services."
+  },
+  {
+    "name": "Cascade Veterinary Clinic",
+    "phone": "+15096630793",
+    "coverage": ["Chelan County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["veterinary_services"],
+    "hours": "Mon-Fri, 8 AM - 5:30 PM",
+    "notes": "General veterinary practice in Wenatchee."
+  },
+  {
+    "name": "Asotin County Animal Control (Sheriff's Office)",
+    "phone": "+15092434717",
+    "coverage": ["Asotin County"],
+    "animal_types": ["domestic", "livestock"],
+    "services": ["animal_control"],
+    "hours": "24/7 (Dispatch)",
+    "notes": "Handles domestic animal and livestock issues. For wildlife, contact WDFW."
+  }
+]
