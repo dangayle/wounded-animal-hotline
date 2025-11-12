@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/dangayle/wounded-animal-hotline/schemas/contacts.schema.json",
+  "title": "Wounded Animal Hotline Contacts",
+  "version": "1.1.0",
+  "description": "Schema for the data file containing the list of Wounded Animal Hotline contacts. The root is an object containing a list of contacts.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "A reference to the schema this data file conforms to. Should point to this file.",
+      "format": "uri-reference"
+    },
+    "contacts": {
+      "type": "array",
+      "description": "The list of contact organizations.",
+      "items": {
+        "$ref": "#/definitions/contact"
+      }
+    }
+  },
+  "required": ["contacts"],
+  "definitions": {
+    "contact": {
+      "title": "Contact",
+      "description": "Schema for a single contact in the Wounded Animal Hotline database (v1.0.0).",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The organization's name."
+        },
+        "phone": {
+          "type": "string",
+          "description": "The contact phone number."
+        },
+        "coverage": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "An array of counties or a description of the geographic area served."
+        },
+        "hours": {
+          "type": "string",
+          "description": "The hours of operation, with '24/7' for always-on services."
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "unsafe_animal_response",
+              "emergency_wildlife_medical",
+              "non_emergency_wildlife_rehab",
+              "wildlife_stabilization",
+              "domestic_animal_control",
+              "livestock_control",
+              "rabies_information",
+              "general_information",
+              "law_enforcement"
+            ]
+          },
+          "description": "A list of standardized service tags that define the contact's function."
+        },
+        "animal_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "large_mammals",
+              "small_mammals",
+              "raptors",
+              "songbirds",
+              "bats",
+              "reptiles",
+              "domestic_pets",
+              "livestock",
+              "raccoons",
+              "coyotes",
+              "skunks"
+            ]
+          },
+          "description": "A list of specific animal categories the contact handles."
+        },
+        "handles_rabies_vector_species": {
+          "type": "boolean",
+          "description": "Indicates if the contact is equipped to handle species that are common carriers of rabies."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any other essential information, such as 'call first' or details about their specific capabilities."
+        }
+      },
+      "required": [
+        "name",
+        "phone",
+        "coverage",
+        "hours",
+        "services",
+        "animal_types",
+        "handles_rabies_vector_species",
+        "notes"
+      ]
+    }
+  }
+}
