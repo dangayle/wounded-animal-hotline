@@ -98,26 +98,64 @@ A phone hotline powered by AI that:
 
 ### Contact Database
 
-30+ verified wildlife contacts including:
+**21 verified contacts** organized by service type and geographic coverage:
 
-- **24/7 Emergency Services**
-  - WSU Wildlife Rehabilitation Center (Pullman)
-  - Emergency veterinary clinics
-  - WDFW Enforcement Dispatch
+- **24/7 Emergency Wildlife Services (1)**
+  - WSU Veterinary Teaching Hospital (Pullman) - Primary wildlife medical facility for Eastern WA
 
-- **Wildlife Rehabilitation Centers**
-  - Licensed state rehabilitators
-  - Raptor specialists
-  - Regional wildlife hospitals
+- **Wildlife Rehabilitation Centers (2)**
+  - Central Washington Wildlife Hospital (Ephrata) - Licensed rehab for small mammals/birds
+  - Blue Mountain Wildlife (Pendleton, OR) - Raptor specialist serving SE WA/NE OR
 
-- **Government Agencies**
-  - WDFW Regional Offices
-  - County animal control
-  - State patrol (for highway wildlife)
+- **Emergency Veterinary Clinics (2)**
+  - Pet Emergency Clinic (Spokane) - 24/7 wildlife stabilization for transfer
+  - Animal Hospital of Omak - Wildlife stabilization during business hours
 
-- **Veterinary Services**
-  - Emergency vets with wildlife experience
-  - On-call rural veterinarians
+- **Government Wildlife Services (4)**
+  - WDFW Enforcement Dispatch - 24/7 statewide enforcement
+  - Washington State Patrol (911) - Highway/public safety threats
+  - WDFW Eastern Region Office (Spokane Valley)
+  - WDFW North Central Region Office (Ephrata)
+
+- **Domestic Animal Control (2)**
+  - SCRAPS (Spokane County) - Emergency dispatch available 24/7
+  - Wenatchee Valley Humane Society (Chelan/Douglas Counties)
+
+- **County Sheriff Offices (9)**
+  - Coverage for: Okanogan, Stevens, Pend Oreille, Ferry, Lincoln, Garfield, Columbia, Walla Walla, Asotin
+
+- **Information Resources (1)**
+  - WA Department of Health Rabies Information
+
+#### Database Schema
+
+The contact database uses a **versioned JSON schema** (v1.4.0) with strict validation:
+
+**Required Fields:**
+- `name` - Organization name
+- `phone` - Primary contact number (E.164 format)
+- `location` - Physical address (with optional lat/long coordinates)
+- `coverage` - Counties/jurisdictions served
+- `hours` - Human-readable hours of operation
+- `services` - Array of standardized service types
+- `animal_types` - Array of animal categories
+- `handles_rabies_vector_species` - Boolean flag for safety triage
+- `notes` - Special instructions or limitations
+
+**Optional Fields:**
+- `emergency_phone` - Dedicated emergency line
+- `non_emergency_phone` - Business hours line
+- `url` - Official website
+- `email` - Contact email
+
+**Service Types:** `unsafe_animal_response`, `emergency_wildlife_medical`, `non_emergency_wildlife_rehab`, `wildlife_stabilization`, `veterinary_services`, `domestic_animal_control`, `livestock_control`, `rabies_information`, `general_information`, `law_enforcement`
+
+**Animal Types:** `large_mammals`, `small_mammals`, `raptors`, `songbirds`, `bats`, `reptiles`, `domestic_pets`, `livestock`, `raccoons`, `coyotes`, `skunks`
+
+**Geographic Data:**
+- 18 contacts include GPS coordinates (lat/long) for distance-based routing
+- All contacts include full physical addresses
+- Enables AI to route callers to nearest appropriate facility
 
 ## Project Structure
 
@@ -128,7 +166,8 @@ wounded-animal-hotline/
 │       └── twilio.yml              # Auto-deploy to Twilio
 ├── src/
 │   ├── assets/
-│   │   ├── contacts.json           # Wildlife contact database
+│   │   ├── contacts.json           # Wildlife contact database (21 contacts)
+│   │   ├── contact.schema.json     # JSON Schema v1.4.0 for validation
 │   │   └── system-prompt.txt       # AI conversation prompt
 │   ├── functions/
 │   │   ├── incoming-call.js        # Call handler & ConversationRelay setup
@@ -146,7 +185,7 @@ wounded-animal-hotline/
 This project is organized into **7 phases** tracked as GitHub Issues:
 
 1. **[Phase 1: Project Setup & Dependencies](../../issues/1)** - 30 min
-2. **[Phase 2: Create Comprehensive Contact Database](../../issues/2)** - 1 hour
+2. **[Phase 2: Create Comprehensive Contact Database](../../issues/2)** - ✅ **COMPLETED**
 3. **[Phase 3: Design AI System Prompt](../../issues/3)** - 30 min
 4. **[Phase 4.1: Build Incoming Call Handler](../../issues/4)** - 30 min
 5. **[Phase 4.2: Build Conversation Relay Webhook](../../issues/5)** - 1.5 hours
@@ -240,36 +279,72 @@ twilio serverless:deploy
 
 ## Adding/Updating Contacts
 
-Edit `src/assets/contacts.json`:
+The contact database follows a strict JSON schema. Edit `src/assets/contacts.json`:
 
 ```json
 {
+  "$schema": "./contact.schema.json",
   "contacts": [
     {
-      "id": "wsu-wildlife",
-      "name": "WSU Wildlife Rehabilitation Center",
-      "phone": "509-335-0711",
-      "counties": ["all"],
-      "animalTypes": ["all"],
-      "hoursType": "24/7",
-      "hours": "24 hours, 7 days a week",
-      "priority": 1,
-      "notes": "State's only 24/7 wildlife emergency service east of Cascades"
+      "name": "WSU Veterinary Teaching Hospital",
+      "phone": "+15093350711",
+      "emergency_phone": "+15093350711",
+      "non_emergency_phone": "+15093350711",
+      "url": "https://hospital.vetmed.wsu.edu",
+      "email": "cole.buser@wsu.edu",
+      "location": {
+        "address": "205 Ott Road, Pullman, WA 99164",
+        "latitude": 46.7279052,
+        "longitude": -117.1586738
+      },
+      "coverage": ["All of Eastern Washington"],
+      "hours": "24/7",
+      "services": [
+        "emergency_wildlife_medical",
+        "non_emergency_wildlife_rehab",
+        "wildlife_stabilization",
+        "veterinary_services"
+      ],
+      "animal_types": [
+        "large_mammals",
+        "small_mammals",
+        "raptors",
+        "songbirds",
+        "bats",
+        "reptiles"
+      ],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary wildlife medical facility for Eastern WA. Call ahead to coordinate arrival."
     }
   ]
 }
 ```
 
-**Contact Fields:**
-- `id` - Unique identifier
-- `name` - Organization name
-- `phone` - Contact number
-- `counties` - Array of counties served (or ["all"])
-- `animalTypes` - Array of specialties (e.g., ["raptors", "mammals"])
-- `hoursType` - "24/7", "business", or "on-call"
-- `hours` - Human-readable hours
-- `priority` - 1 (highest) to 5 (lowest)
-- `notes` - Special instructions or limitations
+**Required Fields:**
+- `name` - Official organization name
+- `phone` - Primary contact (E.164 format: +1XXXXXXXXXX)
+- `location` - Object with required `address`, optional `latitude`/`longitude`
+- `coverage` - Array of counties/jurisdictions served
+- `hours` - Human-readable hours (e.g., "24/7", "Mon-Fri 8 AM - 5 PM")
+- `services` - Array from enum (see schema for valid values)
+- `animal_types` - Array from enum (see schema for valid values)
+- `handles_rabies_vector_species` - Boolean (true/false)
+- `notes` - Special instructions or important details
+
+**Optional Fields:**
+- `emergency_phone` - Dedicated emergency line
+- `non_emergency_phone` - Business hours line
+- `url` - Official website
+- `email` - Contact email address
+
+**Validation:**
+All contacts must validate against `contact.schema.json` (v1.4.0). The schema enforces:
+- E.164 phone number format
+- Valid URL and email formats
+- No additional properties beyond those defined
+- Required fields are present
+
+See `src/assets/contact.schema.json` for complete schema specification.
 
 ## How the AI Works
 
