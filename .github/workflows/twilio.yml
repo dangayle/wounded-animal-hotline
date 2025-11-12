@@ -16,7 +16,7 @@ jobs:
       - run: npm install
       - name: Deploy to Twilio Serverless
         run: |
-          twilio serverless:deploy --account-sid "${{ secrets.TWILIO_ACCOUNT_SID }}" --api-key "${{ secrets.TWILIO_API_KEY }}" --api-secret "${{ secrets.TWILIO_API_SECRET }}" -l debug
+          twilio serverless:deploy --username=$TWILIO_API_KEY --password=$TWILIO_API_SECRET -l debug
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
