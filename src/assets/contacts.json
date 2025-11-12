@@ -151,14 +151,14 @@
       "notes": "Handles animal control for several cities in the area. May provide limited assistance or referrals for small wildlife. Call first."
     },
     {
-      "name": "Washington State Department of Health Rabies Info",
-      "phone": "+18002314476",
+      "name": "Washington State Department of Health Emergency Line",
+      "phone": "+18775394344",
       "coverage": ["Statewide"],
       "hours": "24/7",
       "services": ["rabies_information"],
       "animal_types": ["bats", "raccoons", "coyotes", "skunks"],
       "handles_rabies_vector_species": true,
-      "notes": "Informational hotline for potential human or pet exposure to rabies. This is not a rescue or dispatch service."
+      "notes": "24/7 emergency disease reporting and consultation line for potential human or pet exposure to rabies and other reportable diseases. This is not a rescue or dispatch service."
     },
     {
       "name": "Okanogan County Sheriff's Office",
