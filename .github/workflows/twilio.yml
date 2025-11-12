@@ -14,8 +14,8 @@ jobs:
       - run: npm install -g twilio-cli
       - run: twilio plugins:install @twilio-labs/plugin-serverless
       - run: npm install
-      - run: twilio serverless:deploy
+      - run: twilio serverless:deploy -l debug
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+         # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
