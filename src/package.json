@@ -20,7 +20,12 @@
   "author": "Dan Gayle",
   "license": "MIT",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.68.0"
+    "@anthropic-ai/sdk": "^0.68.0",
+    "twilio": "^5.3.4"
+  },
+  "devDependencies": {
+    "@twilio-labs/serverless-runtime-types": "^4.0.1",
+    "twilio-run": "^4.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
