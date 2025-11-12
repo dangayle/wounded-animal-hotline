@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/dangayle/wounded-animal-hotline/schemas/contacts.schema.json",
   "title": "Wounded Animal Hotline Contacts Schema",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Strict, versioned schema for the Wounded Animal Hotline contacts data file. The root object MUST contain a $schema reference and a contacts array.",
   "type": "object",
   "additionalProperties": false,
@@ -25,6 +25,30 @@
       "type": "string",
       "pattern": "^\\+?[1-9]\\d{1,14}$",
       "description": "Phone number in E.164 format (preferred). Example: +15093350711"
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Physical address for the contact (street, city, state, ZIP). Used for geographic triage and routing."
+        },
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Latitude coordinate in decimal degrees (optional)."
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Longitude coordinate in decimal degrees (optional)."
+        }
+      },
+      "required": ["address"]
     },
     "contact": {
       "type": "object",
@@ -53,6 +77,10 @@
           "type": "string",
           "format": "email",
           "description": "Primary contact email address for non-urgent communication (if available)."
+        },
+        "location": {
+          "$ref": "#/definitions/location",
+          "description": "Physical location information for geographic triage and routing."
         },
         "coverage": {
           "type": "array",
@@ -118,6 +146,7 @@
       "required": [
         "name",
         "phone",
+        "location",
         "coverage",
         "hours",
         "services",

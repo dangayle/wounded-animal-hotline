@@ -4,6 +4,15 @@
     {
       "name": "Washington State University Veterinary Teaching Hospital",
       "phone": "+15093350711",
+      "emergency_phone": "+15093350711",
+      "non_emergency_phone": "+15093350711",
+      "url": "https://hospital.vetmed.wsu.edu",
+      "email": "cole.buser@wsu.edu",
+      "location": {
+        "address": "205 Ott Road, Pullman, WA 99164",
+        "latitude": 46.7279052,
+        "longitude": -117.1586738
+      },
       "coverage": ["All of Eastern Washington"],
       "hours": "24/7",
       "services": [
@@ -21,13 +30,17 @@
         "reptiles"
       ],
       "handles_rabies_vector_species": true,
-      "url": "https://hospital.vetmed.wsu.edu",
-      "email": "cole.buser@wsu.edu",
-      "notes": "The most comprehensive wildlife medical facility in the region. Call ahead to coordinate arrival, especially for large or dangerous animals."
+      "notes": "Primary wildlife medical facility for Eastern WA. Call ahead to coordinate arrival."
     },
     {
       "name": "WDFW Enforcement Dispatch (After Hours/Emergency)",
       "phone": "+13609022936",
+      "non_emergency_phone": "+13609022936",
+      "url": "https://wdfw.wa.gov/about/contact/general",
+      "email": "enforcement-web@dfw.wa.gov",
+      "location": {
+        "address": "1111 Washington Street SE, Olympia, WA 98501"
+      },
       "coverage": ["Statewide"],
       "hours": "24/7",
       "services": ["unsafe_animal_response", "law_enforcement"],
@@ -40,21 +53,31 @@
         "reptiles"
       ],
       "handles_rabies_vector_species": true,
-      "notes": "For situations requiring a wildlife officer, such as public safety threats from wildlife, poaching, or severely injured large game. For immediate, life-threatening emergencies, call 911."
+      "notes": "Statewide enforcement and wildlife officer dispatch. For immediate life-threatening emergencies call 911."
     },
     {
       "name": "Washington State Patrol",
-      "phone": "911",
+      "phone": "+1911",
+      "location": {
+        "address": "Statewide emergency services - dial 911"
+      },
       "coverage": ["Statewide"],
       "hours": "24/7",
       "services": ["unsafe_animal_response"],
       "animal_types": ["large_mammals", "livestock"],
       "handles_rabies_vector_species": false,
-      "notes": "Primary contact for immediate public safety threats involving animals on major highways (e.g., deer, elk, cattle causing a traffic hazard)."
+      "notes": "Use 911 for public-safety threats such as large animals on highways."
     },
     {
       "name": "Central Washington Wildlife Hospital",
       "phone": "+15094507016",
+      "non_emergency_phone": "+15094507016",
+      "url": "https://centralwildlife.org",
+      "location": {
+        "address": "13382 Road A.5 NW, Ephrata, WA 98823",
+        "latitude": 47.3187,
+        "longitude": -119.5531
+      },
       "coverage": [
         "Kittitas County",
         "Yakima County",
@@ -66,45 +89,73 @@
       "services": ["non_emergency_wildlife_rehab", "veterinary_services"],
       "animal_types": ["small_mammals", "songbirds", "reptiles"],
       "handles_rabies_vector_species": false,
-      "url": "https://centralwildlife.org",
-      "notes": "Located near Ellensburg. Does not handle large mammals (deer, bears), raptors, or bats. Call before bringing an animal."
+      "notes": "Licensed wildlife rehabilitation hospital near Ellensburg. Call before bringing an animal."
     },
     {
       "name": "Blue Mountain Wildlife",
       "phone": "+15412780215",
+      "non_emergency_phone": "+15412780215",
+      "url": "https://bluemountainwildlife.org",
+      "email": "lynn@bluemountainwildlife.org",
+      "location": {
+        "address": "71046 Appaloosa Lane, Pendleton, OR 97801",
+        "latitude": 45.6462,
+        "longitude": -118.7886
+      },
       "coverage": ["Southeastern Washington", "Northeastern Oregon"],
       "hours": "8 AM - 6 PM daily, call first.",
       "services": ["non_emergency_wildlife_rehab"],
       "animal_types": ["raptors", "songbirds"],
       "handles_rabies_vector_species": false,
-      "notes": "Located in Pendleton, OR, but serves SE Washington. Specializes in birds. Top resource for injured raptors."
+      "notes": "Primary raptor rehab center serving SE WA and NE OR. Refers cases requiring clinic-level veterinary care to partner clinics."
     },
     {
       "name": "Spokane County Regional Animal Protection Service (SCRAPS)",
       "phone": "+15094772532",
       "emergency_phone": "+15094772533",
       "non_emergency_phone": "+15094772532",
+      "url": "https://www.spokanecounty.org/5519/SCRAPS---Regional-Animal-Protection",
+      "email": "scraps@spokanecounty.org",
+      "location": {
+        "address": "6815 E Trent Ave, Spokane Valley, WA 99212",
+        "latitude": 47.6783,
+        "longitude": -117.3003
+      },
       "coverage": ["Spokane County"],
-      "hours": "24/7 for emergency dispatch; shelter hours vary",
+      "hours": "Shelter hours vary; emergency dispatch 24/7",
       "services": ["domestic_animal_control", "unsafe_animal_response"],
       "animal_types": ["domestic_pets"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary service for stray, loose, or aggressive domestic animals in Spokane County. Intake/appointments: +1 509-477-2532. Emergency/animal emergency dispatch: +1 509-477-2533. Not equipped for wildlife."
+      "notes": "Intake/appointments: +1 509-477-2532. Emergency animal dispatch: +1 509-477-2533. Not a wildlife rehab center."
     },
     {
       "name": "Pet Emergency Clinic & Referral Center (Spokane)",
       "phone": "+15093266670",
+      "emergency_phone": "+15093266670",
+      "url": "https://petemergencyspokane.com",
+      "location": {
+        "address": "21 E Mission Ave, Spokane, WA 99202",
+        "latitude": 47.6588,
+        "longitude": -117.4149
+      },
       "coverage": ["Spokane area", "Northern Idaho"],
       "hours": "24/7",
-      "services": ["wildlife_stabilization", "veterinary_services"],
+      "services": ["veterinary_services", "wildlife_stabilization"],
       "animal_types": ["domestic_pets", "small_mammals", "songbirds"],
       "handles_rabies_vector_species": false,
-      "url": "https://petemergencyspokane.com",
-      "notes": "Primarily for domestic pets. Can provide emergency stabilization for small wildlife before transfer to a licensed rehabilitator. Call ahead to confirm capability."
+      "notes": "24/7 emergency and referral center. Can stabilize wildlife for transfer to licensed rehabilitators."
     },
     {
       "name": "WDFW Eastern Region (Region 1) Office",
       "phone": "+15098921001",
+      "non_emergency_phone": "+15098921001",
+      "url": "https://wdfw.wa.gov/places-to-go/life-outdoors/eastern",
+      "email": "TeamSpokane@dfw.wa.gov",
+      "location": {
+        "address": "2315 N Discovery Place, Spokane Valley, WA 99216",
+        "latitude": 47.6975,
+        "longitude": -117.2389
+      },
       "coverage": [
         "Ferry",
         "Stevens",
@@ -128,11 +179,19 @@
         "reptiles"
       ],
       "handles_rabies_vector_species": false,
-      "notes": "Business hours only. For general questions, non-emergency wildlife conflict advice. Does not provide medical services."
+      "notes": "Regional office for non-emergency wildlife questions; does not provide clinical services."
     },
     {
       "name": "WDFW North Central Region (Region 2) Office",
       "phone": "+15097544624",
+      "non_emergency_phone": "+15097544624",
+      "url": "https://wdfw.wa.gov/places-to-go/life-outdoors/north-central",
+      "email": "TeamEphrata@dfw.wa.gov",
+      "location": {
+        "address": "1550 Alder Street NW, Ephrata, WA 98823",
+        "latitude": 47.3201,
+        "longitude": -119.5536
+      },
       "coverage": ["Okanogan", "Chelan", "Douglas", "Grant", "Adams"],
       "hours": "Mon-Fri, 8 AM - 5 PM",
       "services": ["general_information"],
@@ -145,136 +204,217 @@
         "reptiles"
       ],
       "handles_rabies_vector_species": false,
-      "notes": "Business hours only. For general questions, non-emergency wildlife conflict advice. Does not provide medical services."
+      "notes": "Regional office for non-emergency wildlife questions."
     },
     {
       "name": "Wenatchee Valley Humane Society",
       "phone": "+15096629577",
+      "non_emergency_phone": "+15096629577",
+      "url": "https://www.wenatcheehumane.org",
+      "email": "wvhs@wenatcheehumane.org",
+      "location": {
+        "address": "1474 S Wenatchee Ave, Wenatchee, WA 98801",
+        "latitude": 47.4078,
+        "longitude": -120.3103
+      },
       "coverage": ["Chelan County", "Douglas County"],
-      "hours": "Thu-Tue, 12:30 PM - 5:30 PM",
+      "hours": "Thu-Tue, 12:30 PM - 5:30 PM (clinic by appointment)",
       "services": ["domestic_animal_control", "veterinary_services"],
       "animal_types": ["domestic_pets"],
       "handles_rabies_vector_species": true,
-      "url": "https://www.wenatcheehumane.org",
-      "email": "wvhs@wenatcheehumane.org",
-      "notes": "Handles animal control for several cities in the area. May provide limited assistance or referrals for small wildlife. Call first."
+      "notes": "Operates animal care & control and an on-site clinic for domestic animals (appointments)."
     },
     {
       "name": "Washington State Department of Health Rabies Info",
       "phone": "+18002314476",
+      "non_emergency_phone": "+18002314476",
+      "url": "https://doh.wa.gov/you-and-your-family/illness-and-disease-z/rabies",
+      "location": {
+        "address": "310 Israel Road SE, Tumwater, WA 98501"
+      },
       "coverage": ["Statewide"],
-      "hours": "24/7",
+      "hours": "24/7 (resource pages); local health jurisdictions for case reporting",
       "services": ["rabies_information"],
       "animal_types": ["bats", "raccoons", "coyotes", "skunks"],
       "handles_rabies_vector_species": true,
-      "notes": "Informational hotline for potential human or pet exposure to rabies. This is not a rescue or dispatch service."
+      "notes": "State DOH rabies resources and guidance. Not a rescue service; consult local health jurisdiction for exposures."
     },
     {
       "name": "Okanogan County Sheriff's Office",
       "phone": "+15094227200",
-      "emergency_phone": "+15094227200",
       "non_emergency_phone": "+15094227232",
+      "url": "https://okanogancounty.org/offices/sheriff",
+      "location": {
+        "address": "123 N 5th Ave, Okanogan, WA 98840",
+        "latitude": 48.3709,
+        "longitude": -119.5831
+      },
       "coverage": ["Okanogan County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues (dogs at large, neglect, etc.). Non-emergency dispatch: +1 509-422-7232."
+      "notes": "Main: +1 509-422-7200. Non-emergency/Dispatch line: +1 509-422-7232."
     },
     {
       "name": "Stevens County Sheriff's Office",
       "phone": "+15096845296",
       "emergency_phone": "+15096842555",
       "non_emergency_phone": "+15096845296",
+      "url": "https://www.stevenscountywa.gov/20851/sheriffs-office",
+      "location": {
+        "address": "215 S Oak St, Colville, WA 99114",
+        "latitude": 48.5462,
+        "longitude": -117.9055
+      },
       "coverage": ["Stevens County"],
       "hours": "Mon-Fri, 8 AM - 4 PM; after-hours via dispatch",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues. Non-emergency: +1 509-684-5296. After-hours dispatch: +1 509-684-2555."
+      "notes": "Non-emergency: +1 509-684-5296. After-hours dispatch: +1 509-684-2555."
     },
     {
       "name": "Pend Oreille County Sheriff's Office",
       "phone": "+15094473151",
+      "non_emergency_phone": "+15094473151",
+      "url": "https://www.pendoreille.gov/sheriff",
+      "location": {
+        "address": "227 S Garden Ave, Newport, WA 99156",
+        "latitude": 48.1781,
+        "longitude": -117.0424
+      },
       "coverage": ["Pend Oreille County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "County dispatch and sheriff's office located in Newport, WA."
     },
     {
       "name": "Ferry County Sheriff's Office",
       "phone": "+15097753132",
+      "non_emergency_phone": "+15097753132",
+      "url": "https://www.ferry-county.com/law_and_justice/sheriff/index.php",
+      "location": {
+        "address": "350 E Delaware Ave, Republic, WA 99166",
+        "latitude": 48.6481,
+        "longitude": -118.7375
+      },
       "coverage": ["Ferry County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues. Located in Republic, WA."
+      "notes": "Located in Republic, WA. For emergencies call 911."
     },
     {
       "name": "Lincoln County Sheriff's Office",
       "phone": "+15097253501",
+      "non_emergency_phone": "+15097253501",
+      "url": "https://www.co.lincoln.wa.us/263/Sheriff",
+      "location": {
+        "address": "450 Logan St, Davenport, WA 99122",
+        "latitude": 47.654,
+        "longitude": -118.1508
+      },
       "coverage": ["Lincoln County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Main non-emergency: +1 509-725-3501."
     },
     {
       "name": "Garfield County Sheriff's Office",
       "phone": "+15098433494",
+      "non_emergency_phone": "+15098433494",
+      "url": "https://www.garfieldcountywa.gov",
+      "location": {
+        "address": "789 Main St, Pomeroy, WA 99347",
+        "latitude": 46.4758,
+        "longitude": -117.6016
+      },
       "coverage": ["Garfield County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Main office and dispatch: +1 509-843-3494."
     },
     {
       "name": "Columbia County Sheriff's Office",
       "phone": "+15093822518",
+      "non_emergency_phone": "+15093822518",
+      "url": "https://www.columbiaco.com/78/Sheriff",
+      "location": {
+        "address": "341 E Main St, Dayton, WA 99328",
+        "latitude": 46.3237,
+        "longitude": -117.9726
+      },
       "coverage": ["Columbia County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Office: +1 509-382-2518."
     },
     {
       "name": "Walla Walla County Sheriff's Office",
       "phone": "+15095245400",
       "emergency_phone": "+15095273265",
       "non_emergency_phone": "+15095245400",
+      "url": "https://www.wwcowa.gov/departments/sheriff/index.php",
+      "location": {
+        "address": "240 W Alder St, Walla Walla, WA 99362",
+        "latitude": 46.0646,
+        "longitude": -118.343
+      },
       "coverage": ["Walla Walla County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues. Office: +1 509-524-5400. Dispatch: +1 509-527-3265."
+      "notes": "Office: +1 509-524-5400. Dispatch: +1 509-527-3265."
     },
     {
       "name": "Asotin County Animal Control (Sheriff's Office)",
       "phone": "+15092434717",
+      "non_emergency_phone": "+15092434717",
+      "url": "https://www.asotincountywa.gov/228/Sheriff",
+      "location": {
+        "address": "135 2nd St, Asotin, WA 99402",
+        "latitude": 46.3394,
+        "longitude": -117.0486
+      },
       "coverage": ["Asotin County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Contact Asotin County Sheriff's Office for animal control matters."
     },
     {
       "name": "Animal Hospital of Omak",
       "phone": "+15098265070",
-      "coverage": ["Okanogan County"],
-      "hours": "Mon, 9 AM - 5 PM; Tue-Fri, 8 AM - 5 PM; Wed, 9 AM - 3 PM",
-      "services": ["veterinary_services"],
-      "animal_types": ["domestic_pets", "livestock"],
-      "handles_rabies_vector_species": false,
+      "non_emergency_phone": "+15098265070",
       "url": "https://www.animalhospitalofomak.com",
       "email": "animalhospitalofomak@hotmail.com",
+      "location": {
+        "address": "815 Engh Rd, Omak, WA 98841",
+        "latitude": 48.4111,
+        "longitude": -119.5275
+      },
+      "coverage": ["Okanogan County"],
+      "hours": "Mon, 9 AM - 5 PM; Tue-Fri, 8 AM - 5 PM; Wed, 9 AM - 3 PM",
+      "services": ["veterinary_services", "wildlife_stabilization"],
+      "animal_types": [
+        "domestic_pets",
+        "livestock",
+        "small_mammals",
+        "songbirds"
+      ],
+      "handles_rabies_vector_species": false,
       "notes": "General veterinary services. Can provide stabilization for wildlife during business hours. Call first."
     }
   ]
