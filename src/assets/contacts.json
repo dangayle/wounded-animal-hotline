@@ -110,7 +110,7 @@
         "Walla Walla",
         "Asotin"
       ],
-      "hours": "Mon-Fri, 8 AM - 4:30 PM",
+      "hours": "Mon-Fri, 8 AM - 5 PM",
       "services": ["general_information"],
       "animal_types": [
         "large_mammals",
@@ -127,7 +127,7 @@
       "name": "WDFW North Central Region (Region 2) Office",
       "phone": "+15097544624",
       "coverage": ["Okanogan", "Chelan", "Douglas", "Grant", "Adams"],
-      "hours": "Mon-Fri, 8 AM - 4:30 PM",
+      "hours": "Mon-Fri, 8 AM - 5 PM",
       "services": ["general_information"],
       "animal_types": [
         "large_mammals",
@@ -144,7 +144,7 @@
       "name": "Wenatchee Valley Humane Society",
       "phone": "+15096629577",
       "coverage": ["Chelan County", "Douglas County"],
-      "hours": "Varies, call for info.",
+      "hours": "Thu-Tue, 12:30 PM - 5:30 PM",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets"],
       "handles_rabies_vector_species": true,
@@ -162,19 +162,19 @@
     },
     {
       "name": "Okanogan County Sheriff's Office",
-      "phone": "+15094227232",
+      "phone": "+15094227200",
       "coverage": ["Okanogan County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues (dogs at large, neglect, etc.)."
+      "notes": "Primary contact for domestic animal and livestock issues (dogs at large, neglect, etc.). Non-emergency: ext. 7232."
     },
     {
       "name": "Stevens County Sheriff's Office",
-      "phone": "+15096842555",
+      "phone": "+15096845296",
       "coverage": ["Stevens County"],
-      "hours": "24/7 (Dispatch)",
+      "hours": "Mon-Fri, 8 AM - 4 PM; After hours dispatch: +15096842555",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
@@ -189,6 +189,76 @@
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
       "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Ferry County Sheriff's Office",
+      "phone": "+15097753132",
+      "coverage": ["Ferry County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control", "livestock_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues. Located in Republic, WA."
+    },
+    {
+      "name": "Lincoln County Sheriff's Office",
+      "phone": "+15097253501",
+      "coverage": ["Lincoln County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Garfield County Sheriff's Office",
+      "phone": "+15098432242",
+      "coverage": ["Garfield County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Columbia County Sheriff's Office",
+      "phone": "+15093822518",
+      "coverage": ["Columbia County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Walla Walla County Sheriff's Office",
+      "phone": "+15095245400",
+      "coverage": ["Walla Walla County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Asotin County Animal Control (Sheriff's Office)",
+      "phone": "+15092434717",
+      "coverage": ["Asotin County"],
+      "hours": "24/7 (Dispatch)",
+      "services": ["domestic_animal_control"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": true,
+      "notes": "Primary contact for domestic animal and livestock issues."
+    },
+    {
+      "name": "Animal Hospital of Omak",
+      "phone": "+15098265070",
+      "coverage": ["Okanogan County"],
+      "hours": "Mon, 9 AM - 5 PM; Tue-Fri, 8 AM - 5 PM; Wed, 9 AM - 3 PM",
+      "services": ["veterinary_services"],
+      "animal_types": ["domestic_pets", "livestock"],
+      "handles_rabies_vector_species": false,
+      "notes": "General veterinary services. Can provide stabilization for wildlife during business hours. Call first."
     }
   ]
 }
