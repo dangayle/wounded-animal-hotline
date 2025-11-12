@@ -77,13 +77,15 @@
     },
     {
       "name": "Spokane County Regional Animal Protection Service (SCRAPS)",
-      "phone": "+15094772984",
+      "phone": "+15094772532",
+      "emergency_phone": "+15094772533",
+      "non_emergency_phone": "+15094772532",
       "coverage": ["Spokane County"],
-      "hours": "24/7 for emergency dispatch",
+      "hours": "24/7 for emergency dispatch; shelter hours vary",
       "services": ["domestic_animal_control", "unsafe_animal_response"],
       "animal_types": ["domestic_pets"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary service for stray, loose, or aggressive domestic animals in Spokane County. Not equipped for wildlife."
+      "notes": "Primary service for stray, loose, or aggressive domestic animals in Spokane County. Intake/appointments: +1 509-477-2532. Emergency/animal emergency dispatch: +1 509-477-2533. Not equipped for wildlife."
     },
     {
       "name": "Pet Emergency Clinic & Referral Center (Spokane)",
@@ -163,22 +165,26 @@
     {
       "name": "Okanogan County Sheriff's Office",
       "phone": "+15094227200",
+      "emergency_phone": "+15094227200",
+      "non_emergency_phone": "+15094227232",
       "coverage": ["Okanogan County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues (dogs at large, neglect, etc.). Non-emergency: ext. 7232."
+      "notes": "Primary contact for domestic animal and livestock issues (dogs at large, neglect, etc.). Non-emergency dispatch: +1 509-422-7232."
     },
     {
       "name": "Stevens County Sheriff's Office",
       "phone": "+15096845296",
+      "emergency_phone": "+15096842555",
+      "non_emergency_phone": "+15096845296",
       "coverage": ["Stevens County"],
-      "hours": "Mon-Fri, 8 AM - 4 PM; After hours dispatch: +15096842555",
+      "hours": "Mon-Fri, 8 AM - 4 PM; after-hours via dispatch",
       "services": ["domestic_animal_control", "livestock_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Primary contact for domestic animal and livestock issues. Non-emergency: +1 509-684-5296. After-hours dispatch: +1 509-684-2555."
     },
     {
       "name": "Pend Oreille County Sheriff's Office",
@@ -212,7 +218,7 @@
     },
     {
       "name": "Garfield County Sheriff's Office",
-      "phone": "+15098432242",
+      "phone": "+15098433494",
       "coverage": ["Garfield County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
@@ -233,12 +239,14 @@
     {
       "name": "Walla Walla County Sheriff's Office",
       "phone": "+15095245400",
+      "emergency_phone": "+15095273265",
+      "non_emergency_phone": "+15095245400",
       "coverage": ["Walla Walla County"],
       "hours": "24/7 (Dispatch)",
       "services": ["domestic_animal_control"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": true,
-      "notes": "Primary contact for domestic animal and livestock issues."
+      "notes": "Primary contact for domestic animal and livestock issues. Office: +1 509-524-5400. Dispatch: +1 509-527-3265."
     },
     {
       "name": "Asotin County Animal Control (Sheriff's Office)",

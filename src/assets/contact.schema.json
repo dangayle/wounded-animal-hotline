@@ -1,50 +1,73 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/dangayle/wounded-animal-hotline/schemas/contacts.schema.json",
-  "title": "Wounded Animal Hotline Contacts",
-  "version": "1.1.0",
-  "description": "Schema for the data file containing the list of Wounded Animal Hotline contacts. The root is an object containing a list of contacts.",
+  "title": "Wounded Animal Hotline Contacts Schema",
+  "version": "1.3.0",
+  "description": "Strict, versioned schema for the Wounded Animal Hotline contacts data file. The root object MUST contain a $schema reference and a contacts array.",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "$schema": {
       "type": "string",
-      "description": "A reference to the schema this data file conforms to. Should point to this file.",
+      "description": "A URI referencing the schema that the data file conforms to (self-describing file).",
       "format": "uri-reference"
     },
     "contacts": {
       "type": "array",
-      "description": "The list of contact organizations.",
-      "items": {
-        "$ref": "#/definitions/contact"
-      }
+      "description": "An array of contact objects used for triage/routing.",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/contact" }
     }
   },
-  "required": ["contacts"],
+  "required": ["$schema", "contacts"],
   "definitions": {
+    "phone_e164": {
+      "type": "string",
+      "pattern": "^\\+?[1-9]\\d{1,14}$",
+      "description": "Phone number in E.164 format (preferred). Example: +15093350711"
+    },
     "contact": {
-      "title": "Contact",
-      "description": "Schema for a single contact in the Wounded Animal Hotline database (v1.0.0).",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string",
-          "description": "The organization's name."
+          "minLength": 1,
+          "description": "Official organization or office name."
         },
-        "phone": {
+        "phone": { "$ref": "#/definitions/phone_e164" },
+        "emergency_phone": {
+          "$ref": "#/definitions/phone_e164",
+          "description": "Immediate/emergency contact number (e.g., 911 or dedicated emergency line). Required."
+        },
+        "non_emergency_phone": {
+          "$ref": "#/definitions/phone_e164",
+          "description": "Non-emergency or business-hours contact number. Required."
+        },
+        "url": {
           "type": "string",
-          "description": "The contact phone number."
+          "format": "uri",
+          "description": "Official website or information URL for the contact (if available)."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Primary contact email address for non-urgent communication (if available)."
         },
         "coverage": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "An array of counties or a description of the geographic area served."
+          "minItems": 1,
+          "description": "List of counties, jurisdictions, or textual coverage descriptors (e.g., 'All of Eastern Washington')."
         },
         "hours": {
           "type": "string",
-          "description": "The hours of operation, with '24/7' for always-on services."
+          "minLength": 1,
+          "description": "Human-readable hours of operation (e.g., '24/7', 'Mon-Fri 8:00-17:00')."
         },
         "services": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "string",
             "enum": [
@@ -59,10 +82,11 @@
               "law_enforcement"
             ]
           },
-          "description": "A list of standardized service tags that define the contact's function."
+          "description": "Standardized service tags used for routing decisions."
         },
         "animal_types": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "string",
             "enum": [
@@ -79,15 +103,15 @@
               "skunks"
             ]
           },
-          "description": "A list of specific animal categories the contact handles."
+          "description": "Categories of animals the contact is willing/able to handle."
         },
         "handles_rabies_vector_species": {
           "type": "boolean",
-          "description": "Indicates if the contact is equipped to handle species that are common carriers of rabies."
+          "description": "True if the contact is approved/equipped to handle species that commonly vector rabies (e.g., bats)."
         },
         "notes": {
           "type": "string",
-          "description": "Any other essential information, such as 'call first' or details about their specific capabilities."
+          "description": "Free-form notes for triage or instructions (e.g., 'call first', 'stabilize only')."
         }
       },
       "required": [
