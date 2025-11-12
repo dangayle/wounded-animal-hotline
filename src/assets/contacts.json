@@ -9,7 +9,8 @@
       "services": [
         "emergency_wildlife_medical",
         "non_emergency_wildlife_rehab",
-        "wildlife_stabilization"
+        "wildlife_stabilization",
+        "veterinary_services"
       ],
       "animal_types": [
         "large_mammals",
@@ -20,6 +21,8 @@
         "reptiles"
       ],
       "handles_rabies_vector_species": true,
+      "url": "https://hospital.vetmed.wsu.edu",
+      "email": "cole.buser@wsu.edu",
       "notes": "The most comprehensive wildlife medical facility in the region. Call ahead to coordinate arrival, especially for large or dangerous animals."
     },
     {
@@ -60,9 +63,10 @@
         "Grant County"
       ],
       "hours": "Varies, call for intake.",
-      "services": ["non_emergency_wildlife_rehab"],
+      "services": ["non_emergency_wildlife_rehab", "veterinary_services"],
       "animal_types": ["small_mammals", "songbirds", "reptiles"],
       "handles_rabies_vector_species": false,
+      "url": "https://centralwildlife.org",
       "notes": "Located near Ellensburg. Does not handle large mammals (deer, bears), raptors, or bats. Call before bringing an animal."
     },
     {
@@ -92,9 +96,10 @@
       "phone": "+15093266670",
       "coverage": ["Spokane area", "Northern Idaho"],
       "hours": "24/7",
-      "services": ["wildlife_stabilization"],
+      "services": ["wildlife_stabilization", "veterinary_services"],
       "animal_types": ["domestic_pets", "small_mammals", "songbirds"],
       "handles_rabies_vector_species": false,
+      "url": "https://petemergencyspokane.com",
       "notes": "Primarily for domestic pets. Can provide emergency stabilization for small wildlife before transfer to a licensed rehabilitator. Call ahead to confirm capability."
     },
     {
@@ -147,9 +152,11 @@
       "phone": "+15096629577",
       "coverage": ["Chelan County", "Douglas County"],
       "hours": "Thu-Tue, 12:30 PM - 5:30 PM",
-      "services": ["domestic_animal_control"],
+      "services": ["domestic_animal_control", "veterinary_services"],
       "animal_types": ["domestic_pets"],
       "handles_rabies_vector_species": true,
+      "url": "https://www.wenatcheehumane.org",
+      "email": "wvhs@wenatcheehumane.org",
       "notes": "Handles animal control for several cities in the area. May provide limited assistance or referrals for small wildlife. Call first."
     },
     {
@@ -266,6 +273,8 @@
       "services": ["veterinary_services"],
       "animal_types": ["domestic_pets", "livestock"],
       "handles_rabies_vector_species": false,
+      "url": "https://www.animalhospitalofomak.com",
+      "email": "animalhospitalofomak@hotmail.com",
       "notes": "General veterinary services. Can provide stabilization for wildlife during business hours. Call first."
     }
   ]
