@@ -8,6 +8,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import contactsJson from './assets/contacts.json' assert { type: 'json' };
 import systemPromptTxt from './assets/system-prompt.txt';
+import { sendFollowUpSMS } from './send-sms.js';
 
 // Debug logging
 console.log('contactsJson imported:', typeof contactsJson, contactsJson);
@@ -82,7 +83,7 @@ function handleIncomingCall(request) {
 /**
  * Handle setup message from Twilio
  */
-async function handleSetup(ws, message) {
+async function handleSetup(ws, message, memory) {
   console.log('Setup received:', {
     sessionId: message.sessionId,
     callSid: message.callSid,
@@ -90,21 +91,35 @@ async function handleSetup(ws, message) {
     to: message.to
   });
 
+  // Store caller information in memory for SMS follow-up
+  memory.callerNumber = message.from;
+  memory.callSid = message.callSid;
+  memory.smsOptIn = false;
+
   // Send initial greeting
   const initialMessage = "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. What kind of animal is it, and where are you located?";
 
   try {
-    const message = JSON.stringify({
+    const wsMessage = JSON.stringify({
       type: 'text',
       token: initialMessage,
       last: true
     });
-    console.log('Sending initial greeting:', message);
-    ws.send(message);
+    console.log('Sending initial greeting:', wsMessage);
+    ws.send(wsMessage);
   } catch (error) {
     console.error('Error sending initial greeting:', error);
   }
 }
+</text>
+
+<old_text line=110>
+/**
+ * Handle prompt message (user spoke)
+ */
+async function handlePrompt(ws, message, env, memory) {
+  const userMessage = message.voicePrompt || '';
+  console.log('User said:', userMessage);
 
 /**
  * Handle prompt message (user spoke)
@@ -174,6 +189,43 @@ async function handlePrompt(ws, message, env, memory) {
       }
     ];
 
+    // If SMS opt-in was confirmed and we have contact info, trigger SMS sending
+    if (memory.smsOptIn && !memory.smsSent && memory.callerNumber) {
+      // Extract animal type and county from conversation if available
+      const animalType = memory.animalType || null;
+      const county = memory.county || null;
+      const contacts = memory.providedContacts || [];
+
+      if (contacts.length > 0) {
+        console.log('Triggering SMS send to:', memory.callerNumber);
+
+        // Send SMS asynchronously (don't wait for completion)
+        sendFollowUpSMS(env, {
+          to: memory.callerNumber,
+          contacts: contacts,
+          animalType: animalType,
+          county: county,
+          callSid: memory.callSid
+        }).then(result => {
+          if (result.success) {
+            console.log('SMS sent successfully:', result.messageSid);
+            memory.smsSent = true;
+          } else {
+            console.error('SMS send failed:', result.error);
+          }
+        }).catch(error => {
+          console.error('SMS send error:', error);
+        });
+      }
+    }
+</text>
+
+<old_text line=244>
+    switch (message.type) {
+      case 'setup':
+        await handleSetup(ws, message);
+        break;
+
     // Send response back over WebSocket
     try {
       const message = JSON.stringify({
@@ -239,7 +291,7 @@ async function handleWebSocketMessage(ws, messageData, env, memory) {
 
     switch (message.type) {
       case 'setup':
-        await handleSetup(ws, message);
+        await handleSetup(ws, message, memory);
         break;
 
       case 'prompt':
@@ -302,10 +354,10 @@ export default {
           status: 'ok',
           service: 'wounded-animal-hotline-relay',
           version: '1.0.0',
-          endpoints: ['/incoming-call', '/conversation-relay'],
+          endpoints: ['/incoming-call', '/conversation-relay', '/send-sms'],
           contactsLoaded: contactsJson?.contacts?.length || 0,
           promptLoaded: systemPromptTxt ? true : false,
-          features: ['WebSocket', 'ConversationRelay', 'Anthropic Claude', 'Wildlife Triage']
+          features: ['WebSocket', 'ConversationRelay', 'Anthropic Claude', 'Wildlife Triage', 'SMS Follow-up']
         }),
         {
           status: 200,
@@ -317,6 +369,57 @@ export default {
     // Incoming call handler - returns TwiML
     if (request.method === 'POST' && path === '/incoming-call') {
       return handleIncomingCall(request);
+    }
+
+    // SMS follow-up endpoint
+    if (request.method === 'POST' && path === '/send-sms') {
+      try {
+        const body = await request.json();
+        const { to, contacts, animalType, county, callSid } = body;
+
+        // Validate required fields
+        if (!to || !contacts || contacts.length === 0) {
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: 'Missing required fields: to, contacts'
+            }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            }
+          );
+        }
+
+        // Send SMS
+        const result = await sendFollowUpSMS(env, {
+          to,
+          contacts,
+          animalType,
+          county,
+          callSid
+        });
+
+        return new Response(
+          JSON.stringify(result),
+          {
+            status: result.success ? 200 : 500,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          }
+        );
+      } catch (error) {
+        console.error('Error in SMS endpoint:', error);
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: error.message || 'Failed to process SMS request'
+          }),
+          {
+            status: 500,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          }
+        );
+      }
     }
 
     // WebSocket endpoint for ConversationRelay
