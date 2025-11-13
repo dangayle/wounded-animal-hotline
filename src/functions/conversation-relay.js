@@ -161,7 +161,7 @@ async function handleSetup(context, event, response, callback) {
 
     // Initial greeting for the caller
     const initialMessage =
-      "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. First, are you safe right now? Are you at a safe distance from the animal?";
+      "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. What kind of animal is it, and where are you located?";
 
     // Return setup configuration (voice is already configured in incoming-call.js)
     response.setBody({

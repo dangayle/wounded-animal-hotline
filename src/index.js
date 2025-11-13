@@ -91,7 +91,7 @@ async function handleSetup(ws, message) {
   });
 
   // Send initial greeting
-  const initialMessage = "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. First, are you safe right now? Are you at a safe distance from the animal?";
+  const initialMessage = "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. What kind of animal is it, and where are you located?";
 
   try {
     const message = JSON.stringify({
