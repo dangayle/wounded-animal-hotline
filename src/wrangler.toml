@@ -1,3 +1,19 @@
 name = "wounded-animal-hotline-relay"
 main = "index.js"
 compatibility_date = "2024-11-12"
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables (secrets like ANTHROPIC_API_KEY should be set via: wrangler secret put ANTHROPIC_API_KEY)
+[vars]
+ENVIRONMENT = "production"
+
+# Rules for importing assets
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+[[rules]]
+type = "Data"
+globs = ["**/*.json"]
+fallthrough = true
