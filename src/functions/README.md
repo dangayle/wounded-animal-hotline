@@ -70,7 +70,7 @@ Incoming Call → incoming-call.js (TwiML) → ConversationRelay → conversatio
 > **Note:** The following example uses `Runtime.getFunctions()` to load helper functions, which is specific to the [Twilio Functions](https://www.twilio.com/docs/runtime/functions) environment. In standard Node.js, you would use `require('./helpers/contact-lookup')` instead.
 
 ```javascript
-const contactLookup = require(Runtime.getFunctions()['helpers/contact-lookup'].path);
+const contactLookup = require(runtime.getFunctions()['helpers/contact-lookup'].path);
 
 // Filter contacts by criteria
 const matches = contactLookup.filterContacts(contacts.contacts, {
@@ -211,9 +211,9 @@ Or in Twilio Console:
 - Add API key to Twilio Functions environment variables
 - Redeploy after adding
 
-**TTS Issues / Voice Format Errors**
-- Voice configuration uses an object with `provider`, `voice`, and `engine` properties
-- Example: `{ provider: 'amazon-polly', voice: 'Joanna', engine: 'neural' }`
+**TTS Voice Configuration Requirements**
+- Voice configuration must use an object with `provider`, `voice`, and `engine` properties
+- Example (required format): `{ provider: 'amazon-polly', voice: 'Joanna', engine: 'neural' }`
 
 **Timeout Errors**
 - Claude API calls can take 2-5 seconds
