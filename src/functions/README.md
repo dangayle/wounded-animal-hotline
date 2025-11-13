@@ -18,7 +18,7 @@ Incoming Call → incoming-call.js (TwiML) → ConversationRelay → conversatio
 **Flow**:
 1. Receives incoming call webhook from Twilio
 2. Returns TwiML with ConversationRelay configuration
-3. Configures voice (Polly.Joanna-Neural), transcription (Deepgram), and AI provider (Anthropic)
+3. Configures voice (Amazon Polly Neural - Joanna), transcription (Deepgram), and AI provider (Anthropic)
 4. Points ConversationRelay to the `conversation-relay.js` webhook endpoint
 
 **Environment Variables Required**:
@@ -66,6 +66,9 @@ Incoming Call → incoming-call.js (TwiML) → ConversationRelay → conversatio
 - `formatPhoneForText(phone)` - Format phone number for SMS (e.g., "509-335-0711")
 
 **Usage Example**:
+
+> **Note:** The following example uses `Runtime.getFunctions()` to load helper functions, which is specific to the [Twilio Functions](https://www.twilio.com/docs/runtime/functions) environment. In standard Node.js, you would use `require('./helpers/contact-lookup')` instead.
+
 ```javascript
 const contactLookup = require(Runtime.getFunctions()['helpers/contact-lookup'].path);
 
@@ -209,8 +212,8 @@ Or in Twilio Console:
 - Redeploy after adding
 
 **TTS Issues / Voice Format Errors**
-- Voice format must be: `Polly.Joanna-Neural` (not just `Joanna`)
-- Engine must match voice type (Neural vs Standard)
+- Voice configuration uses an object with `provider`, `voice`, and `engine` properties
+- Example: `{ provider: 'amazon-polly', voice: 'Joanna', engine: 'neural' }`
 
 **Timeout Errors**
 - Claude API calls can take 2-5 seconds

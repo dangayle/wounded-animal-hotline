@@ -11,6 +11,8 @@
  * 4. AI conversation handles wildlife triage and resource routing
  */
 
+const Twilio = require('twilio');
+
 exports.handler = async function(context, event, callback) {
   // Create a new Twilio Response object
   const twiml = new Twilio.twiml.VoiceResponse();
@@ -31,30 +33,18 @@ exports.handler = async function(context, event, callback) {
 
     // Configure ConversationRelay with Claude
     const connect = twiml.connect();
-    const conversationRelay = connect.conversationRelay({
+    connect.conversationRelay({
       url: conversationRelayUrl,
-      voice: 'Polly.Joanna-Neural',
+      voice: {
+        provider: 'amazon-polly',
+        voice: 'Joanna',
+        engine: 'neural'
+      },
       language: 'en-US',
       transcriptionProvider: 'deepgram',
       transcriptionModel: 'nova-2-conversationalai',
       dtmfDetection: false,
       debug: false
-    });
-
-    // Configure AI provider (Anthropic Claude)
-    conversationRelay.provider({
-      name: 'anthropic',
-      apiKey: anthropicApiKey,
-      model: 'claude-3-5-sonnet-20241022',
-      temperature: 0.7,
-      maxTokens: 1024
-    });
-
-    // Configure voice settings for TTS
-    conversationRelay.voice({
-      provider: 'amazon-polly',
-      voice: 'Joanna',
-      engine: 'neural'
     });
 
     console.log('ConversationRelay initiated for call:', event.CallSid);

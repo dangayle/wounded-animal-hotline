@@ -12,6 +12,7 @@
  * 5. error - Handle errors
  */
 
+const Twilio = require('twilio');
 const Anthropic = require('@anthropic-ai/sdk');
 
 // Helper to load system prompt from assets
@@ -19,8 +20,8 @@ async function loadSystemPrompt(runtime) {
   try {
     const asset = runtime.getAssets()['/system-prompt.txt'];
     const filePath = asset.path;
-    const fs = require('fs');
-    return fs.readFileSync(filePath, 'utf8');
+    const fs = require('fs').promises;
+    return await fs.readFile(filePath, 'utf8');
   } catch (error) {
     console.error('Error loading system prompt:', error);
     // Fallback to basic system prompt
@@ -40,8 +41,8 @@ async function loadContacts(runtime) {
   try {
     const asset = runtime.getAssets()['/contacts.json'];
     const filePath = asset.path;
-    const fs = require('fs');
-    const data = fs.readFileSync(filePath, 'utf8');
+    const fs = require('fs').promises;
+    const data = await fs.readFile(filePath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
     console.error('Error loading contacts:', error);

@@ -100,10 +100,14 @@ function isCurrentlyOpen(contact, currentTime = new Date()) {
     return true;
   }
 
-  // Get current Pacific time
-  const pacificTime = new Date(currentTime.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
-  const currentDay = pacificTime.getDay(); // 0 = Sunday, 6 = Saturday
-  const currentHour = pacificTime.getHours();
+  // Get current Pacific time using UTC offset calculation
+  // Pacific Time is UTC-8 (PST) or UTC-7 (PDT)
+  const pacificOffset = -8 * 60; // Minutes offset for PST (will need DST handling for production)
+  const utc = currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000);
+  const pacificTime = new Date(utc + (pacificOffset * 60000));
+  
+  const currentDay = pacificTime.getUTCDay(); // 0 = Sunday, 6 = Saturday
+  const currentHour = pacificTime.getUTCHours();
 
   // Simple business hours check (Mon-Fri 8-5)
   if (hours.includes('mon-fri') || hours.includes('monday-friday')) {
