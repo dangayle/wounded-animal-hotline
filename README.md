@@ -209,12 +209,10 @@ Required for deployment:
 ```bash
 TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=your_auth_token
-TWILIO_PHONE_NUMBER=+1XXXXXXXXXX
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-**Note:** `TWILIO_PHONE_NUMBER` is required for SMS follow-up feature (optional).
-
+**Note:** SMS follow-up uses the Twilio phone number from the incoming call context (no separate env var needed).
 Set these in:
 - GitHub Secrets (for CI/CD)
 - Twilio Functions Environment Variables (for runtime)

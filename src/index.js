@@ -93,6 +93,7 @@ async function handleSetup(ws, message, memory) {
 
   // Store caller information in memory for SMS follow-up
   memory.callerNumber = message.from;
+  memory.twilioNumber = message.to;
   memory.callSid = message.callSid;
   memory.smsOptIn = false;
 
@@ -202,6 +203,7 @@ async function handlePrompt(ws, message, env, memory) {
         // Send SMS asynchronously (don't wait for completion)
         sendFollowUpSMS(env, {
           to: memory.callerNumber,
+          from: memory.twilioNumber,
           contacts: contacts,
           animalType: animalType,
           county: county,
@@ -375,14 +377,14 @@ export default {
     if (request.method === 'POST' && path === '/send-sms') {
       try {
         const body = await request.json();
-        const { to, contacts, animalType, county, callSid } = body;
+        const { to, from, contacts, animalType, county, callSid } = body;
 
         // Validate required fields
-        if (!to || !contacts || contacts.length === 0) {
+        if (!to || !from || !contacts || contacts.length === 0) {
           return new Response(
             JSON.stringify({
               success: false,
-              error: 'Missing required fields: to, contacts'
+              error: 'Missing required fields: to, from, contacts'
             }),
             {
               status: 400,
@@ -394,6 +396,7 @@ export default {
         // Send SMS
         const result = await sendFollowUpSMS(env, {
           to,
+          from,
           contacts,
           animalType,
           county,

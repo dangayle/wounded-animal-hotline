@@ -107,14 +107,13 @@ function estimateSMSSegments(message) {
  * @returns {Promise<Object>} Result object with success status
  */
 export async function sendFollowUpSMS(env, params) {
-  const { to, contacts, animalType, county, callSid } = params;
+  const { to, from, contacts, animalType, county, callSid } = params;
 
   // Validate environment variables
   const accountSid = env.TWILIO_ACCOUNT_SID;
   const authToken = env.TWILIO_AUTH_TOKEN;
-  const fromNumber = env.TWILIO_PHONE_NUMBER;
 
-  if (!accountSid || !authToken || !fromNumber) {
+  if (!accountSid || !authToken) {
     console.error('Missing Twilio credentials in environment variables');
     return {
       success: false,
@@ -127,6 +126,13 @@ export async function sendFollowUpSMS(env, params) {
     return {
       success: false,
       error: 'Recipient phone number is required'
+    };
+  }
+
+  if (!from) {
+    return {
+      success: false,
+      error: 'Sender phone number is required'
     };
   }
 
@@ -153,7 +159,7 @@ export async function sendFollowUpSMS(env, params) {
 
   const formData = new URLSearchParams();
   formData.append('To', to);
-  formData.append('From', fromNumber);
+  formData.append('From', from);
   formData.append('Body', messageBody);
 
   // Create Basic Auth header
