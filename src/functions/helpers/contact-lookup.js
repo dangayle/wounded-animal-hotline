@@ -16,7 +16,7 @@ function servesCounty(contact, county) {
 
   const countyLower = county.toLowerCase().trim();
 
-  return contact.coverage.some(area => {
+  return contact.coverage.some((area) => {
     const areaLower = area.toLowerCase().trim();
 
     // Exact county match
@@ -25,12 +25,15 @@ function servesCounty(contact, county) {
     }
 
     // Statewide coverage
-    if (areaLower.includes('statewide') || areaLower.includes('all of')) {
+    if (areaLower.includes("statewide") || areaLower.includes("all of")) {
       return true;
     }
 
     // Partial match (e.g., "Eastern Washington" includes many counties)
-    if (areaLower.includes('eastern washington') && isEasternWashingtonCounty(countyLower)) {
+    if (
+      areaLower.includes("eastern washington") &&
+      isEasternWashingtonCounty(countyLower)
+    ) {
       return true;
     }
 
@@ -45,13 +48,28 @@ function servesCounty(contact, county) {
  */
 function isEasternWashingtonCounty(county) {
   const easternCounties = [
-    'spokane', 'stevens', 'pend oreille', 'ferry', 'lincoln',
-    'whitman', 'garfield', 'columbia', 'walla walla', 'asotin',
-    'okanogan', 'chelan', 'douglas', 'grant', 'adams',
-    'kittitas', 'yakima', 'benton', 'franklin'
+    "spokane",
+    "stevens",
+    "pend oreille",
+    "ferry",
+    "lincoln",
+    "whitman",
+    "garfield",
+    "columbia",
+    "walla walla",
+    "asotin",
+    "okanogan",
+    "chelan",
+    "douglas",
+    "grant",
+    "adams",
+    "kittitas",
+    "yakima",
+    "benton",
+    "franklin",
   ];
 
-  const countyName = county.toLowerCase().replace(' county', '').trim();
+  const countyName = county.toLowerCase().replace(" county", "").trim();
   return easternCounties.includes(countyName);
 }
 
@@ -66,9 +84,11 @@ function handlesAnimalType(contact, animalType) {
 
   const animalLower = animalType.toLowerCase().trim();
 
-  return contact.animal_types.some(type => {
-    return type.toLowerCase().includes(animalLower) ||
-           animalLower.includes(type.toLowerCase());
+  return contact.animal_types.some((type) => {
+    return (
+      type.toLowerCase().includes(animalLower) ||
+      animalLower.includes(type.toLowerCase())
+    );
   });
 }
 
@@ -96,21 +116,21 @@ function isCurrentlyOpen(contact, currentTime = new Date()) {
   const hours = contact.hours.toLowerCase();
 
   // 24/7 contacts are always open
-  if (hours.includes('24/7') || hours.includes('24 hours')) {
+  if (hours.includes("24/7") || hours.includes("24 hours")) {
     return true;
   }
 
   // Get current Pacific time using UTC offset calculation
   // Pacific Time is UTC-8 (PST) or UTC-7 (PDT)
   const pacificOffset = -8 * 60; // Minutes offset for PST (will need DST handling for production)
-  const utc = currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000);
-  const pacificTime = new Date(utc + (pacificOffset * 60000));
-  
+  const utc = currentTime.getTime() + currentTime.getTimezoneOffset() * 60000;
+  const pacificTime = new Date(utc + pacificOffset * 60000);
+
   const currentDay = pacificTime.getUTCDay(); // 0 = Sunday, 6 = Saturday
   const currentHour = pacificTime.getUTCHours();
 
   // Simple business hours check (Mon-Fri 8-5)
-  if (hours.includes('mon-fri') || hours.includes('monday-friday')) {
+  if (hours.includes("mon-fri") || hours.includes("monday-friday")) {
     const isWeekday = currentDay >= 1 && currentDay <= 5;
     const isDuringBusinessHours = currentHour >= 8 && currentHour < 17;
     return isWeekday && isDuringBusinessHours;
@@ -136,27 +156,35 @@ function filterContacts(contacts, criteria = {}) {
 
   // Filter by county coverage
   if (criteria.county) {
-    filtered = filtered.filter(contact => servesCounty(contact, criteria.county));
+    filtered = filtered.filter((contact) =>
+      servesCounty(contact, criteria.county),
+    );
   }
 
   // Filter by animal type
   if (criteria.animalType) {
-    filtered = filtered.filter(contact => handlesAnimalType(contact, criteria.animalType));
+    filtered = filtered.filter((contact) =>
+      handlesAnimalType(contact, criteria.animalType),
+    );
   }
 
   // Filter by service
   if (criteria.service) {
-    filtered = filtered.filter(contact => providesService(contact, criteria.service));
+    filtered = filtered.filter((contact) =>
+      providesService(contact, criteria.service),
+    );
   }
 
   // Filter by rabies vector capability
   if (criteria.rabiesVector) {
-    filtered = filtered.filter(contact => contact.handles_rabies_vector_species === true);
+    filtered = filtered.filter(
+      (contact) => contact.handles_rabies_vector_species === true,
+    );
   }
 
   // Filter by currently open
   if (criteria.requireOpen) {
-    filtered = filtered.filter(contact => isCurrentlyOpen(contact));
+    filtered = filtered.filter((contact) => isCurrentlyOpen(contact));
   }
 
   return filtered;
@@ -168,9 +196,9 @@ function filterContacts(contacts, criteria = {}) {
  * @returns {Array} Emergency contacts (24/7 availability)
  */
 function getEmergencyContacts(contacts) {
-  return contacts.filter(contact => {
-    const hours = (contact.hours || '').toLowerCase();
-    return hours.includes('24/7') || hours.includes('24 hours');
+  return contacts.filter((contact) => {
+    const hours = (contact.hours || "").toLowerCase();
+    return hours.includes("24/7") || hours.includes("24 hours");
   });
 }
 
@@ -187,18 +215,22 @@ function getEmergencyContacts(contacts) {
 function sortByPriority(contacts) {
   return contacts.sort((a, b) => {
     // 24/7 contacts first
-    const aIs24x7 = (a.hours || '').toLowerCase().includes('24/7');
-    const bIs24x7 = (b.hours || '').toLowerCase().includes('24/7');
+    const aIs24x7 = (a.hours || "").toLowerCase().includes("24/7");
+    const bIs24x7 = (b.hours || "").toLowerCase().includes("24/7");
     if (aIs24x7 && !bIs24x7) return -1;
     if (!aIs24x7 && bIs24x7) return 1;
 
     // Emergency services second
-    const aIsEmergency = a.services && a.services.some(s =>
-      s.includes('emergency') || s.includes('unsafe_animal_response')
-    );
-    const bIsEmergency = b.services && b.services.some(s =>
-      s.includes('emergency') || s.includes('unsafe_animal_response')
-    );
+    const aIsEmergency =
+      a.services &&
+      a.services.some(
+        (s) => s.includes("emergency") || s.includes("unsafe_animal_response"),
+      );
+    const bIsEmergency =
+      b.services &&
+      b.services.some(
+        (s) => s.includes("emergency") || s.includes("unsafe_animal_response"),
+      );
     if (aIsEmergency && !bIsEmergency) return -1;
     if (!aIsEmergency && bIsEmergency) return 1;
 
@@ -222,28 +254,34 @@ function sortByPriority(contacts) {
  */
 function formatPhoneForVoice(phone) {
   // Remove +1 country code and any formatting
-  let digits = phone.replace(/\D/g, '');
-  if (digits.startsWith('1') && digits.length === 11) {
+  let digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("1") && digits.length === 11) {
     digits = digits.substring(1);
   }
 
   // Special handling for 911
-  if (digits === '911') {
-    return 'nine one one';
+  if (digits === "911") {
+    return "nine one one";
+  }
+
+  // Validate expected length
+  if (digits.length !== 10) {
+    console.warn("Unexpected phone number format:", phone);
+    return phone; // Return original if can't format
   }
 
   // Special handling for 800 numbers
-  if (digits.startsWith('800')) {
-    const part1 = digits.substring(0, 3).split('').join(' ');
-    const part2 = digits.substring(3, 6).split('').join(' ');
-    const part3 = digits.substring(6, 10).split('').join(' ');
+  if (digits.startsWith("800")) {
+    const part1 = digits.substring(0, 3).split("").join(" ");
+    const part2 = digits.substring(3, 6).split("").join(" ");
+    const part3 = digits.substring(6, 10).split("").join(" ");
     return `${part1}, ${part2}, ${part3}`;
   }
 
   // Standard format: XXX, XXX, XXXX
-  const areaCode = digits.substring(0, 3).split('').join(' ');
-  const prefix = digits.substring(3, 6).split('').join(' ');
-  const lineNumber = digits.substring(6, 10).split('').join(' ');
+  const areaCode = digits.substring(0, 3).split("").join(" ");
+  const prefix = digits.substring(3, 6).split("").join(" ");
+  const lineNumber = digits.substring(6, 10).split("").join(" ");
 
   return `${areaCode}, ${prefix}, ${lineNumber}`;
 }
@@ -255,19 +293,24 @@ function formatPhoneForVoice(phone) {
  */
 function formatPhoneForText(phone) {
   // Remove +1 country code and any formatting
-  let digits = phone.replace(/\D/g, '');
-  if (digits.startsWith('1') && digits.length === 11) {
+  let digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("1") && digits.length === 11) {
     digits = digits.substring(1);
   }
 
-  // Format as XXX-XXX-XXXX
-  if (digits.length === 10) {
-    return `${digits.substring(0, 3)}-${digits.substring(3, 6)}-${digits.substring(6, 10)}`;
-  } else if (digits === '911') {
-    return '911';
+  // Special handling for 911
+  if (digits === "911") {
+    return "911";
   }
 
-  return phone; // Return original if can't format
+  // Validate and format as XXX-XXX-XXXX
+  if (digits.length === 10) {
+    return `${digits.substring(0, 3)}-${digits.substring(3, 6)}-${digits.substring(6, 10)}`;
+  }
+
+  // Return original if can't format
+  console.warn("Unexpected phone number format:", phone);
+  return phone;
 }
 
 module.exports = {
@@ -280,5 +323,5 @@ module.exports = {
   getEmergencyContacts,
   sortByPriority,
   formatPhoneForVoice,
-  formatPhoneForText
+  formatPhoneForText,
 };

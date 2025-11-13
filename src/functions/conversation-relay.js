@@ -12,18 +12,24 @@
  * 5. error - Handle errors
  */
 
-const Twilio = require('twilio');
-const Anthropic = require('@anthropic-ai/sdk');
+const Twilio = require("twilio");
+const Anthropic = require("@anthropic-ai/sdk");
 
 // Helper to load system prompt from assets
 async function loadSystemPrompt(context) {
   try {
-    const asset = context.getAssets()['/system-prompt.txt'];
+    const asset = context.getAssets()["/system-prompt.txt"];
     const filePath = asset.path;
-    const fs = require('fs').promises;
-    return await fs.readFile(filePath, 'utf8');
+    const fs = require("fs").promises;
+    return await fs.readFile(filePath, "utf8");
   } catch (error) {
-    console.error('Error loading system prompt:', error);
+    if (error.code === "ENOENT") {
+      console.error("System prompt file not found:", error);
+    } else if (error.code === "EACCES") {
+      console.error("Permission denied reading system prompt:", error);
+    } else {
+      console.error("Error loading system prompt:", error);
+    }
     // Fallback to basic system prompt
     return `You are a compassionate wildlife triage specialist for Eastern Washington.
 Your goal is to:
@@ -39,13 +45,19 @@ Keep responses under 100 words for voice clarity.`;
 // Helper to load contacts database from assets
 async function loadContacts(context) {
   try {
-    const asset = context.getAssets()['/contacts.json'];
+    const asset = context.getAssets()["/contacts.json"];
     const filePath = asset.path;
-    const fs = require('fs').promises;
-    const data = await fs.readFile(filePath, 'utf8');
+    const fs = require("fs").promises;
+    const data = await fs.readFile(filePath, "utf8");
     return JSON.parse(data);
   } catch (error) {
-    console.error('Error loading contacts:', error);
+    if (error.code === "ENOENT") {
+      console.error("Contacts file not found:", error);
+    } else if (error.code === "EACCES") {
+      console.error("Permission denied reading contacts:", error);
+    } else {
+      console.error("Error loading contacts:", error);
+    }
     return { contacts: [] };
   }
 }
@@ -54,16 +66,16 @@ async function loadContacts(context) {
 function getPacificDateTime() {
   const now = new Date();
   const options = {
-    timeZone: 'America/Los_Angeles',
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true
+    timeZone: "America/Los_Angeles",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
   };
-  return now.toLocaleString('en-US', options);
+  return now.toLocaleString("en-US", options);
 }
 
 // Helper to build context for Claude
@@ -85,45 +97,50 @@ Always repeat phone numbers twice.
 `;
 }
 
-exports.handler = async function(context, event, callback) {
+exports.handler = async function (context, event, callback) {
   const response = new Twilio.Response();
-  response.appendHeader('Content-Type', 'application/json');
+  response.appendHeader("Content-Type", "application/json");
 
   try {
     const eventType = event.type;
 
-    console.log('ConversationRelay event:', eventType, 'CallSid:', event.callSid);
+    console.log(
+      "ConversationRelay event:",
+      eventType,
+      "CallSid:",
+      event.callSid,
+    );
 
     switch (eventType) {
-      case 'setup':
+      case "setup":
         await handleSetup(context, event, response, callback);
         break;
 
-      case 'prompt':
+      case "prompt":
         await handlePrompt(context, event, response, callback);
         break;
 
-      case 'interrupt':
+      case "interrupt":
         await handleInterrupt(context, event, response, callback);
         break;
 
-      case 'dtmf':
+      case "dtmf":
         await handleDtmf(context, event, response, callback);
         break;
 
-      case 'error':
+      case "error":
         await handleError(context, event, response, callback);
         break;
 
       default:
-        console.log('Unknown event type:', eventType);
-        response.setBody({ error: 'Unknown event type' });
+        console.log("Unknown event type:", eventType);
+        response.setBody({ error: "Unknown event type" });
         response.setStatusCode(400);
         return callback(null, response);
     }
   } catch (error) {
-    console.error('Error in conversation-relay handler:', error);
-    response.setBody({ error: 'Internal server error' });
+    console.error("Error in conversation-relay handler:", error);
+    response.setBody({ error: "Internal server error" });
     response.setStatusCode(500);
     return callback(null, response);
   }
@@ -143,48 +160,39 @@ async function handleSetup(context, event, response, callback) {
     const fullSystemPrompt = `${systemPrompt}\n\n${conversationContext}`;
 
     // Initial greeting for the caller
-    const initialMessage = "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. First, are you safe right now? Are you at a safe distance from the animal?";
+    const initialMessage =
+      "Hello, this is the Wounded Animal Hotline. I'm here to help you find the right resource. First, are you safe right now? Are you at a safe distance from the animal?";
 
-    // Return setup configuration
+    // Return setup configuration (voice is already configured in incoming-call.js)
     response.setBody({
       config: {
         provider: {
-          name: 'anthropic',
-          model: 'claude-3-5-sonnet-20241022',
+          name: "anthropic",
+          model: "claude-3-5-sonnet-20241022",
           temperature: 0.7,
-          max_tokens: 1024
+          max_tokens: 1024,
         },
         system: fullSystemPrompt,
         initial_message: initialMessage,
-        voice: {
-          provider: 'amazon-polly',
-          voice: 'Joanna',
-          engine: 'neural'
-        }
-      }
+      },
     });
 
-    console.log('Setup complete for call:', event.callSid);
+    console.log("Setup complete for call:", event.callSid);
     return callback(null, response);
-
   } catch (error) {
-    console.error('Error in handleSetup:', error);
+    console.error("Error in handleSetup:", error);
     response.setBody({
       config: {
         provider: {
-          name: 'anthropic',
-          model: 'claude-3-5-sonnet-20241022',
+          name: "anthropic",
+          model: "claude-3-5-sonnet-20241022",
           temperature: 0.7,
-          max_tokens: 512
+          max_tokens: 1024,
         },
-        system: 'You are a helpful wildlife triage assistant. Keep responses brief.',
-        initial_message: 'Hello, how can I help you with a wildlife situation?',
-        voice: {
-          provider: 'amazon-polly',
-          voice: 'Joanna',
-          engine: 'neural'
-        }
-      }
+        system:
+          "You are a helpful wildlife triage assistant. Keep responses brief.",
+        initial_message: "Hello, how can I help you with a wildlife situation?",
+      },
     });
     return callback(null, response);
   }
@@ -195,72 +203,91 @@ async function handleSetup(context, event, response, callback) {
  */
 async function handlePrompt(context, event, response, callback) {
   try {
-    const userMessage = event.voicePrompt || '';
+    const userMessage = event.voicePrompt || "";
     const conversationHistory = event.memory?.messages || [];
 
-    console.log('User said:', userMessage);
+    console.log("User said:", userMessage);
+
+    // Validate Anthropic API key before initializing client
+    const anthropicApiKey = context.ANTHROPIC_API_KEY;
+    if (!anthropicApiKey) {
+      console.error("ANTHROPIC_API_KEY not configured");
+      response.setBody({
+        response:
+          "I apologize, but the service is currently unavailable. Please try again later.",
+        memory: event.memory || { messages: [] },
+      });
+      return callback(null, response);
+    }
 
     // Initialize Anthropic client
     const anthropic = new Anthropic({
-      apiKey: context.ANTHROPIC_API_KEY
+      apiKey: anthropicApiKey,
     });
+
+    // Implement conversation memory limit (keep last 10 messages = 5 exchanges)
+    const MAX_HISTORY_LENGTH = 10;
+    const limitedHistory = conversationHistory.slice(-MAX_HISTORY_LENGTH);
 
     // Build messages array for Claude
     const messages = [
-      ...conversationHistory,
+      ...limitedHistory,
       {
-        role: 'user',
-        content: userMessage
-      }
+        role: "user",
+        content: userMessage,
+      },
     ];
 
-    // Get system prompt
-    const systemPrompt = await loadSystemPrompt(context);
-    const contacts = await loadContacts(context);
+    // Load system prompt and contacts (cache in memory to avoid repeated file loads)
+    const systemPrompt =
+      event.memory?.systemPrompt || (await loadSystemPrompt(context));
+    const contacts = event.memory?.contacts || (await loadContacts(context));
     const conversationContext = buildConversationContext(contacts);
     const fullSystemPrompt = `${systemPrompt}\n\n${conversationContext}`;
 
     // Call Claude API
     const claudeResponse = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+      model: "claude-3-5-sonnet-20241022",
       max_tokens: 1024,
       temperature: 0.7,
       system: fullSystemPrompt,
-      messages: messages
+      messages: messages,
     });
 
     // Extract response text
     const assistantMessage = claudeResponse.content[0].text;
 
-    console.log('Claude response:', assistantMessage);
+    console.log("Claude response:", assistantMessage);
 
-    // Return response
+    // Return response with cached resources
     response.setBody({
       response: assistantMessage,
       memory: {
         messages: [
-          ...conversationHistory,
+          ...limitedHistory,
           {
-            role: 'user',
-            content: userMessage
+            role: "user",
+            content: userMessage,
           },
           {
-            role: 'assistant',
-            content: assistantMessage
-          }
-        ]
-      }
+            role: "assistant",
+            content: assistantMessage,
+          },
+        ],
+        systemPrompt: systemPrompt,
+        contacts: contacts,
+      },
     });
 
     return callback(null, response);
-
   } catch (error) {
-    console.error('Error in handlePrompt:', error);
+    console.error("Error in handlePrompt:", error);
 
     // Return error response
     response.setBody({
-      response: "I apologize, but I'm having trouble processing that. Could you please repeat?",
-      memory: event.memory || { messages: [] }
+      response:
+        "I apologize, but I'm having trouble processing that. Could you please repeat?",
+      memory: event.memory || { messages: [] },
     });
 
     return callback(null, response);
@@ -271,12 +298,12 @@ async function handlePrompt(context, event, response, callback) {
  * Handle interrupt event - User interrupted the AI response
  */
 async function handleInterrupt(context, event, response, callback) {
-  console.log('User interrupted at:', event.callSid);
+  console.log("User interrupted at:", event.callSid);
 
   // Acknowledge the interrupt
   response.setBody({
-    action: 'stop',
-    memory: event.memory || { messages: [] }
+    action: "stop",
+    memory: event.memory || { messages: [] },
   });
 
   return callback(null, response);
@@ -287,11 +314,11 @@ async function handleInterrupt(context, event, response, callback) {
  */
 async function handleDtmf(context, event, response, callback) {
   const digit = event.digit;
-  console.log('DTMF received:', digit);
+  console.log("DTMF received:", digit);
 
   // For now, just acknowledge
   response.setBody({
-    memory: event.memory || { messages: [] }
+    memory: event.memory || { messages: [] },
   });
 
   return callback(null, response);
@@ -301,12 +328,13 @@ async function handleDtmf(context, event, response, callback) {
  * Handle error event - Something went wrong
  */
 async function handleError(context, event, response, callback) {
-  console.error('ConversationRelay error:', event.error);
+  console.error("ConversationRelay error:", event.error);
 
   // Return error acknowledgment
   response.setBody({
-    response: "I apologize, but I'm experiencing technical difficulties. Please try calling again.",
-    memory: event.memory || { messages: [] }
+    response:
+      "I apologize, but I'm experiencing technical difficulties. Please try calling again.",
+    memory: event.memory || { messages: [] },
   });
 
   return callback(null, response);
