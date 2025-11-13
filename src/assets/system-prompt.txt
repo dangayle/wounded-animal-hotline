@@ -263,7 +263,6 @@ PROMPT: "Would you like me to text you this information for your reference?"
 
 If caller says YES:
 - Confirm you'll send the text to the number they called from
-- Include in SMS: contact names, phone numbers, hours, reference number, WDFW directory link
 - Let them know: "I'll send that to you right after our call."
 - Mark in conversation memory: smsOptIn = true, callerNumber = [from number]
 
@@ -271,10 +270,11 @@ If caller says NO or doesn't respond clearly:
 - No problem, move to call conclusion
 - Do NOT push or ask twice about SMS
 
-SMS will include:
-- Up to 3 recommended contacts with phone numbers and hours
-- Link to WDFW rehabilitator directory
-- Call reference number for their records
+SMS will include (following SMS channel format - under 300 chars):
+- Primary contact name, phone number, and hours
+- Location and "Call first" instruction
+- Basic safety reminder
+- Short WDFW link: wdfw.wa.gov/wildlife
 
 IMPORTANT:
 - You MUST always offer SMS follow-up after providing contacts

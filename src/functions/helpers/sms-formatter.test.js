@@ -82,18 +82,18 @@ const sms1 = formatContactsSMS(contacts, {
   callSid: 'CA1234567890'
 });
 
-assert.ok(sms1.includes('Thanks for calling'), 'Should include greeting');
-assert.ok(sms1.includes('raptor'), 'Should include animal type');
-assert.ok(sms1.includes('Spokane'), 'Should include county');
 assert.ok(sms1.includes('WSU Veterinary'), 'Should include first contact');
-assert.ok(sms1.includes('509-335-0711'), 'Should include phone numbers');
-assert.ok(sms1.includes('wdfw.wa.gov'), 'Should include WDFW link');
-assert.ok(sms1.includes('Ref:'), 'Should include reference number');
+assert.ok(sms1.includes('509-335-0711'), 'Should include phone number');
+assert.ok(sms1.includes('24/7'), 'Should include hours');
+assert.ok(sms1.includes('Call first'), 'Should include call first instruction');
+assert.ok(sms1.includes('Safety:'), 'Should include safety reminder');
+assert.ok(sms1.includes('wdfw.wa.gov/wildlife'), 'Should include WDFW link');
 
 const sms2 = formatContactsSMS(contacts.slice(0, 1), {});
-assert.ok(sms2.includes('Your recommended contacts:'), 'Should work without context');
+assert.ok(sms2.includes('WSU Veterinary'), 'Should work without context');
+assert.ok(sms2.includes('Call first'), 'Should include call first instruction');
 
-// Test contact limit (max 3)
+// Test that only primary contact is used (not multiple)
 const manyContacts = [
   ...contacts,
   { name: 'Fourth Contact', phone: '+15095554444', hours: '24/7' },
@@ -101,8 +101,9 @@ const manyContacts = [
 ];
 
 const sms3 = formatContactsSMS(manyContacts, {});
-const contactCount = (sms3.match(/\d\./g) || []).length;
-assert.strictEqual(contactCount, 3, 'Should limit to 3 contacts');
+assert.ok(sms3.includes('WSU Veterinary'), 'Should include first contact');
+assert.ok(!sms3.includes('Central Washington'), 'Should not include second contact');
+assert.ok(!sms3.includes('Fourth Contact'), 'Should not include additional contacts');
 
 console.log('✓ formatContactsSMS tests passed');
 
@@ -114,10 +115,10 @@ const segment1 = estimateSMSSegments(shortMessage);
 assert.strictEqual(segment1.segments, 1, 'Short message should be 1 segment');
 assert.strictEqual(segment1.type, 'GSM-7', 'ASCII should use GSM-7');
 
-const longMessage = 'A'.repeat(200);
+const longMessage = 'A'.repeat(300);
 const segment2 = estimateSMSSegments(longMessage);
 assert.ok(segment2.segments > 1, 'Long message should use multiple segments');
-assert.strictEqual(segment2.length, 200, 'Should report correct length');
+assert.strictEqual(segment2.length, 300, 'Should report correct length');
 
 const unicodeMessage = 'Hello 👋 Unicode test 🐾';
 const segment3 = estimateSMSSegments(unicodeMessage);
@@ -194,17 +195,14 @@ const segmentInfo = estimateSMSSegments(fullSMS);
 console.log(`\nMessage stats: ${segmentInfo.length} chars, ${segmentInfo.segments} segment(s), ${segmentInfo.type}`);
 
 // Verify key components are present
-assert.ok(fullSMS.includes('Thanks for calling'), 'Has greeting');
-assert.ok(fullSMS.includes('bat'), 'Has animal type');
-assert.ok(fullSMS.includes('Spokane'), 'Has county');
-assert.ok(fullSMS.includes('WSU'), 'Has contact 1');
-assert.ok(fullSMS.includes('Pet Emergency'), 'Has contact 2');
-assert.ok(fullSMS.includes('509-335-0711'), 'Has phone 1');
-assert.ok(fullSMS.includes('509-326-6670'), 'Has phone 2');
+assert.ok(fullSMS.includes('WSU'), 'Has primary contact');
+assert.ok(!fullSMS.includes('Pet Emergency'), 'Should only have primary contact, not secondary');
+assert.ok(fullSMS.includes('509-335-0711'), 'Has phone number');
 assert.ok(fullSMS.includes('24/7'), 'Has hours');
-assert.ok(fullSMS.includes('wdfw.wa.gov'), 'Has link');
-assert.ok(fullSMS.includes('Ref: #'), 'Has reference');
-assert.ok(fullSMS.includes('67890'), 'Has correct reference number');
+assert.ok(fullSMS.includes('Call first'), 'Has call first instruction');
+assert.ok(fullSMS.includes('Safety:'), 'Has safety reminder');
+assert.ok(fullSMS.includes('wdfw.wa.gov/wildlife'), 'Has WDFW link');
+assert.ok(segmentInfo.length < 300, 'Message should be under 300 chars per SMS guidelines');
 
 console.log('✓ Integration test passed');
 
