@@ -163,7 +163,7 @@ curl -X POST http://localhost:3000/conversation-relay \
 
 ### AI Provider Settings
 - **Provider**: Anthropic
-- **Model**: claude-3-5-sonnet-20241022
+- **Model**: claude-haiku-4-5
 - **Temperature**: 0.7
 - **Max Tokens**: 1024
 

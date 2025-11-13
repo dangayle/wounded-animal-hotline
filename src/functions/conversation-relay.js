@@ -168,7 +168,7 @@ async function handleSetup(context, event, response, callback) {
       config: {
         provider: {
           name: "anthropic",
-          model: "claude-3-5-sonnet-20241022",
+          model: "claude-haiku-4-5",
           temperature: 0.7,
           max_tokens: 1024,
         },
@@ -185,7 +185,7 @@ async function handleSetup(context, event, response, callback) {
       config: {
         provider: {
           name: "anthropic",
-          model: "claude-3-5-sonnet-20241022",
+          model: "claude-haiku-4-5",
           temperature: 0.7,
           max_tokens: 1024,
         },
@@ -247,7 +247,7 @@ async function handlePrompt(context, event, response, callback) {
 
     // Call Claude API
     const claudeResponse = await anthropic.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-haiku-4-5",
       max_tokens: 1024,
       temperature: 0.7,
       system: fullSystemPrompt,
