@@ -20,7 +20,7 @@ Implemented Twilio ConversationRelay incoming call handler and webhook for the W
 - Points to conversation-relay webhook endpoint
 
 **Key Configuration:**
-- Model: `claude-3-5-sonnet-20241022`
+- Model: `claude-haiku-4-5`
 - Temperature: 0.7
 - Max Tokens: 1024
 - Voice: `{ provider: 'amazon-polly', voice: 'Joanna', engine: 'neural' }`
