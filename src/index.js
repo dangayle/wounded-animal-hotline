@@ -211,13 +211,6 @@ async function handlePrompt(ws, message, env, memory) {
         });
       }
     }
-</text>
-
-<old_text line=244>
-    switch (message.type) {
-      case 'setup':
-        await handleSetup(ws, message);
-        break;
 
     // Send response back over WebSocket
     try {
