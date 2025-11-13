@@ -69,7 +69,7 @@ function handleIncomingCall(request) {
   const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
-    <ConversationRelay url="${conversationRelayUrl}" ttsProvider="Amazon" voice="Joanna-Neural" language="en-US" transcriptionProvider="deepgram" transcriptionModel="nova-2-conversationalai" dtmfDetection="false" debug="false"/>
+    <ConversationRelay url="${conversationRelayUrl}" ttsProvider="Google" voice="en-AU-Chirp3-HD-Charon" language="en-AU" transcriptionProvider="deepgram" transcriptionModel="nova-2-conversationalai" dtmfDetection="false" debug="false"/>
   </Connect>
 </Response>`;
 
