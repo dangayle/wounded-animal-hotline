@@ -16,9 +16,9 @@ const Twilio = require('twilio');
 const Anthropic = require('@anthropic-ai/sdk');
 
 // Helper to load system prompt from assets
-async function loadSystemPrompt(runtime) {
+async function loadSystemPrompt(context) {
   try {
-    const asset = runtime.getAssets()['/system-prompt.txt'];
+    const asset = context.getAssets()['/system-prompt.txt'];
     const filePath = asset.path;
     const fs = require('fs').promises;
     return await fs.readFile(filePath, 'utf8');
@@ -37,9 +37,9 @@ Keep responses under 100 words for voice clarity.`;
 }
 
 // Helper to load contacts database from assets
-async function loadContacts(runtime) {
+async function loadContacts(context) {
   try {
-    const asset = runtime.getAssets()['/contacts.json'];
+    const asset = context.getAssets()['/contacts.json'];
     const filePath = asset.path;
     const fs = require('fs').promises;
     const data = await fs.readFile(filePath, 'utf8');

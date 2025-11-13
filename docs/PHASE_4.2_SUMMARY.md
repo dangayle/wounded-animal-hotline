@@ -23,7 +23,7 @@ Implemented Twilio ConversationRelay incoming call handler and webhook for the W
 - Model: `claude-3-5-sonnet-20241022`
 - Temperature: 0.7
 - Max Tokens: 1024
-- Voice: `Polly.Joanna-Neural`
+- Voice: `{ provider: 'amazon-polly', voice: 'Joanna', engine: 'neural' }`
 - Transcription: Deepgram
 
 **Environment Variables:**
