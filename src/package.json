@@ -1,33 +1,29 @@
 {
-  "name": "wounded-animal-hotline",
+  "name": "wounded-animal-hotline-relay",
   "version": "1.0.0",
-  "description": "AI-powered voice hotline for Eastern Washington wildlife emergencies",
+  "description": "Cloudflare Worker WebSocket handler for ConversationRelay with Anthropic Claude",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "twilio-run",
-    "deploy": "twilio-run deploy"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:production": "wrangler deploy --env production"
   },
   "keywords": [
+    "cloudflare",
+    "worker",
+    "websocket",
     "twilio",
-    "serverless",
-    "wildlife",
-    "emergency",
     "conversationrelay",
     "anthropic",
-    "claude"
+    "claude",
+    "wildlife"
   ],
   "author": "Dan Gayle",
   "license": "MIT",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.68.0",
-    "twilio": "^5.3.4"
+    "@anthropic-ai/sdk": "^0.68.0"
   },
   "devDependencies": {
-    "@twilio-labs/serverless-runtime-types": "^4.0.1",
-    "twilio-run": "^4.0.0"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "wrangler": "^4.47.0"
   }
 }
