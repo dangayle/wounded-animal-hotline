@@ -112,15 +112,6 @@ async function handleSetup(ws, message, memory) {
     console.error('Error sending initial greeting:', error);
   }
 }
-</text>
-
-<old_text line=110>
-/**
- * Handle prompt message (user spoke)
- */
-async function handlePrompt(ws, message, env, memory) {
-  const userMessage = message.voicePrompt || '';
-  console.log('User said:', userMessage);
 
 /**
  * Handle prompt message (user spoke)
