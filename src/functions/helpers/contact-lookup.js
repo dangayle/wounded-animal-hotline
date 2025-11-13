@@ -5,6 +5,31 @@
  * wildlife resources database based on various criteria.
  */
 
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Load contacts from JSON file
+ * @param {string} filePath - Optional path to contacts.json file
+ * @returns {Array} Array of contact objects
+ */
+function loadContacts(filePath) {
+  try {
+    // Default path for Twilio Assets or local development
+    const defaultPath = path.join(__dirname, '../../assets/contacts.json');
+    const contactsPath = filePath || defaultPath;
+    
+    const data = fs.readFileSync(contactsPath, 'utf8');
+    const parsed = JSON.parse(data);
+    
+    // Handle both { contacts: [...] } and direct array formats
+    return Array.isArray(parsed) ? parsed : parsed.contacts || [];
+  } catch (error) {
+    console.error('Error loading contacts:', error.message);
+    return [];
+  }
+}
+
 /**
  * Check if a contact serves a specific county
  * @param {Object} contact - Contact object from database
@@ -313,7 +338,106 @@ function formatPhoneForText(phone) {
   return phone;
 }
 
+/**
+ * Get statewide fallback contacts
+ * @param {Array} contacts - Array of all contacts
+ * @returns {Array} Statewide service contacts
+ */
+function getStatewideContacts(contacts) {
+  return contacts.filter((contact) => {
+    const coverage = (contact.coverage || []).join(" ").toLowerCase();
+    return coverage.includes("statewide") || coverage.includes("all of");
+  });
+}
+
+/**
+ * Main contact finder function - filters and prioritizes contacts based on criteria
+ * @param {Array} contacts - Array of contact objects (or omit to auto-load)
+ * @param {Object} criteria - Filtering criteria
+ * @param {string} criteria.county - County name (e.g., "Spokane", "Chelan")
+ * @param {string} criteria.animalType - Animal type (e.g., "raptors", "small_mammals", "bats")
+ * @param {string} criteria.urgency - Urgency level ("emergency" or "routine")
+ * @param {Date} criteria.timeOfDay - Current time (defaults to now)
+ * @param {string} criteria.service - Specific service needed
+ * @param {boolean} criteria.rabiesVector - Is this a rabies vector species?
+ * @param {number} criteria.maxResults - Maximum number of results to return (default: 3)
+ * @returns {Array} Sorted array of matching contacts
+ */
+function findContacts(contacts, criteria = {}) {
+  // Auto-load contacts if not provided
+  if (!Array.isArray(contacts)) {
+    // If first argument is criteria object, shift parameters
+    if (typeof contacts === 'object' && contacts !== null) {
+      criteria = contacts;
+      contacts = loadContacts();
+    } else {
+      contacts = loadContacts();
+    }
+  }
+
+  // Handle empty contacts array
+  if (!contacts || contacts.length === 0) {
+    console.warn('No contacts available');
+    return [];
+  }
+
+  const {
+    county,
+    animalType,
+    urgency,
+    timeOfDay,
+    service,
+    rabiesVector,
+    maxResults = 3
+  } = criteria;
+
+  // Build filter criteria object
+  const filterCriteria = {};
+  
+  if (county) filterCriteria.county = county;
+  if (animalType) filterCriteria.animalType = animalType;
+  if (service) filterCriteria.service = service;
+  if (rabiesVector) filterCriteria.rabiesVector = rabiesVector;
+
+  // For emergency situations or after hours, require currently open contacts
+  if (urgency === 'emergency' || timeOfDay) {
+    filterCriteria.requireOpen = true;
+  }
+
+  // Apply filters
+  let filtered = filterContacts(contacts, filterCriteria);
+
+  // Edge case: No matches found
+  if (filtered.length === 0) {
+    console.log('No matches found, falling back to statewide services');
+    
+    // Try without animal type filter first
+    if (animalType) {
+      const relaxedCriteria = { ...filterCriteria };
+      delete relaxedCriteria.animalType;
+      filtered = filterContacts(contacts, relaxedCriteria);
+    }
+    
+    // If still no matches, return statewide services
+    if (filtered.length === 0) {
+      filtered = getStatewideContacts(contacts);
+    }
+    
+    // Last resort: return emergency contacts
+    if (filtered.length === 0 && urgency === 'emergency') {
+      filtered = getEmergencyContacts(contacts);
+    }
+  }
+
+  // Sort by priority
+  const sorted = sortByPriority(filtered);
+
+  // Limit results
+  return sorted.slice(0, maxResults);
+}
+
 module.exports = {
+  loadContacts,
   servesCounty,
   isEasternWashingtonCounty,
   handlesAnimalType,
@@ -321,7 +445,9 @@ module.exports = {
   isCurrentlyOpen,
   filterContacts,
   getEmergencyContacts,
+  getStatewideContacts,
   sortByPriority,
   formatPhoneForVoice,
   formatPhoneForText,
+  findContacts,
 };

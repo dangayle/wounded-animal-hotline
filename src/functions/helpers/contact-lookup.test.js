@@ -5,6 +5,7 @@
  */
 
 const contactLookup = require('./contact-lookup');
+const path = require('path');
 
 // Mock contact data for testing
 const mockContacts = [
@@ -79,8 +80,35 @@ const mockContacts = [
       "reptiles"
     ],
     handles_rabies_vector_species: false
+  },
+  {
+    name: "WDFW Statewide",
+    phone: "+13609022936",
+    coverage: ["Statewide"],
+    hours: "24/7",
+    services: ["unsafe_animal_response", "law_enforcement"],
+    animal_types: [
+      "large_mammals",
+      "small_mammals",
+      "raptors",
+      "songbirds",
+      "bats",
+      "reptiles"
+    ],
+    handles_rabies_vector_species: true
   }
 ];
+
+// Test loadContacts
+console.log('Testing loadContacts...');
+const loadedContacts = contactLookup.loadContacts(
+  path.join(__dirname, '../../assets/contacts.json')
+);
+console.assert(
+  Array.isArray(loadedContacts) && loadedContacts.length > 0,
+  'Should load contacts from JSON file'
+);
+console.log(`✓ loadContacts tests passed (loaded ${loadedContacts.length} contacts)`);
 
 // Test servesCounty
 console.log('Testing servesCounty...');
@@ -287,6 +315,91 @@ console.assert(
   `Expected "800-231-4476", got "${text3}"`
 );
 console.log('✓ formatPhoneForText tests passed');
+
+// Test getStatewideContacts
+console.log('\nTesting getStatewideContacts...');
+const statewide = contactLookup.getStatewideContacts(mockContacts);
+console.assert(
+  statewide.length >= 1,
+  'Should find at least 1 statewide contact'
+);
+console.assert(
+  statewide.some(c => c.name.includes('Statewide') || c.coverage.some(cov => cov.toLowerCase().includes('statewide'))),
+  'Statewide contacts should include "statewide" in name or coverage'
+);
+console.log('✓ getStatewideContacts tests passed');
+
+// Test findContacts - main entry point
+console.log('\nTesting findContacts (main entry point)...');
+
+// Test 1: Emergency in Spokane
+const emergency1 = contactLookup.findContacts(mockContacts, {
+  county: 'Spokane',
+  urgency: 'emergency'
+});
+console.assert(
+  emergency1.length > 0 && emergency1.length <= 3,
+  `Emergency search should return 1-3 results, got ${emergency1.length}`
+);
+console.assert(
+  emergency1[0].hours.toLowerCase().includes('24'),
+  'First emergency result should be 24/7'
+);
+
+// Test 2: Routine call for small mammals in Chelan
+const routine1 = contactLookup.findContacts(mockContacts, {
+  county: 'Chelan',
+  animalType: 'small_mammals'
+});
+console.assert(
+  routine1.length > 0,
+  'Should find contacts for small mammals in Chelan'
+);
+
+// Test 3: Out of region (should fall back to statewide)
+const outOfRegion = contactLookup.findContacts(mockContacts, {
+  county: 'King'  // Not in Eastern WA
+});
+console.assert(
+  outOfRegion.length > 0,
+  'Should return statewide fallback for out-of-region query'
+);
+
+// Test 4: Unknown animal type (should still return results)
+const unknown = contactLookup.findContacts(mockContacts, {
+  county: 'Spokane',
+  animalType: 'unknown_species_xyz'
+});
+console.assert(
+  unknown.length > 0,
+  'Should return fallback contacts for unknown animal type'
+);
+
+// Test 5: Rabies vector species
+const rabies = contactLookup.findContacts(mockContacts, {
+  county: 'Spokane',
+  rabiesVector: true
+});
+console.assert(
+  rabies.length > 0,
+  'Should find rabies-capable contacts'
+);
+console.assert(
+  rabies.every(c => c.handles_rabies_vector_species === true),
+  'All rabies results should handle rabies vector species'
+);
+
+// Test 6: Criteria-only call (auto-load contacts)
+const autoLoad = contactLookup.findContacts({
+  county: 'Spokane',
+  maxResults: 2
+});
+console.assert(
+  autoLoad.length <= 2,
+  'Should respect maxResults limit'
+);
+
+console.log('✓ findContacts tests passed');
 
 console.log('\n========================================');
 console.log('✓ All tests passed!');
