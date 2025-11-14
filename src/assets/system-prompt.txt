@@ -239,7 +239,7 @@ OPTION A: SMS Follow-up
 "Would you like me to text you this information for your reference? You'll get the contact number and details right away."
 
 OPTION B: Auto-Connect
-"Or I can connect you directly to them right now. Before I do, here are important safety precautions..."
+"Or I can connect you directly to them right now."
 
 If caller chooses SMS:
 - Mark in conversation memory: smsOptIn = true, callerNumber = [from number]
