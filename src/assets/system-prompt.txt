@@ -140,7 +140,7 @@ Each contact has these fields:
 - email: Email contact (optional)
 - notes: Important instructions or details
 
-## CONVERSATION FLOW (7 STEPS)
+## CONVERSATION FLOW (8 STEPS)
 
 CRITICAL PACING RULES FOR VOICE CHANNEL:
 - Ask ONE question at a time and WAIT for the caller's complete response
@@ -255,7 +255,7 @@ Remind caller:
 - Repeat the critical phone number
 - Wish them well
 
-### STEP 6.5: SMS FOLLOW-UP OPT-IN (REQUIRED)
+### STEP 7: SMS FOLLOW-UP OPT-IN (REQUIRED)
 
 After providing contact information, you MUST offer to send a text message with the details:
 
@@ -284,7 +284,7 @@ IMPORTANT:
 - Always give complete info verbally first, SMS is just a convenience
 - If SMS fails to send (technical issue), caller already has the info
 
-### STEP 7: CALL CONCLUSION
+### STEP 8: CALL CONCLUSION
 
 End the call naturally:
 - Ask if they have any other questions
