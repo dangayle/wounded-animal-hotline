@@ -46,35 +46,34 @@ function formatContactForSMS(contact, index) {
 
 /**
  * Build complete SMS message with contacts
- * Follows SMS channel guidelines: under 300 chars, single primary contact
  */
 function formatContactsSMS(contacts, options = {}) {
   const { animalType, county, callSid } = options;
 
-  if (!contacts || contacts.length === 0) {
-    return 'No contacts available';
-  }
+  let message = 'Thanks for calling the Wounded Animal Hotline!\n\n';
 
-  // Use only the primary (first) contact
-  const contact = contacts[0];
-  const name = contact.name || 'Wildlife Contact';
-  const phone = formatPhoneForText(contact.phone);
-  const hours = contact.hours || 'Call for hours';
-  const location = contact.location?.address?.split(',')[1]?.trim() || '';
-
-  let message = `${name} (${hours})\n${phone}`;
-
-  if (location) {
-    message += `\n${location} - Call first`;
+  // Add context
+  if (animalType || county) {
+    message += 'Your recommended contacts';
+    if (animalType) message += ` for ${animalType}`;
+    if (county) message += ` in ${county}`;
+    message += ':\n\n';
   } else {
-    message += '\nCall first';
+    message += 'Your recommended contacts:\n\n';
   }
 
-  // Add basic safety reminder
-  message += '\n\nSafety: Don\'t touch animal\nKeep distance, observe';
+  // Add up to 3 contacts
+  const limitedContacts = contacts.slice(0, 3);
+  limitedContacts.forEach((contact, idx) => {
+    message += formatContactForSMS(contact, idx + 1) + '\n\n';
+  });
 
-  // Short WDFW link
-  message += '\n\nMore: wdfw.wa.gov/wildlife';
+  // Add WDFW directory link
+  message += 'Find more:\nhttps://wdfw.wa.gov/species-habitats/living/injured-wildlife/rehabilitation/find\n\n';
+
+  // Add reference number
+  const refNumber = generateReferenceNumber(callSid);
+  message += `Ref: #${refNumber}`;
 
   return message;
 }
