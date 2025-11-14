@@ -23,8 +23,9 @@ A phone hotline powered by AI that:
 1. ✅ **Answers immediately** - No waiting, no menus, just conversation
 2. 🗺️ **Routes intelligently** - Based on your location, the animal type, and time of day
 3. 📞 **Provides direct contacts** - Wildlife rehabilitators, WDFW offices, emergency vets
-4. 🤖 **Understands context** - Distinguishes between true emergencies and "baby animal is fine" situations
-5. 🌲 **Covers the region** - 11 counties from Spokane to Canada, Wenatchee to Idaho
+4. 📱 **SMS follow-up** - Optional text message with contact info for easy reference
+5. 🤖 **Understands context** - Distinguishes between true emergencies and "baby animal is fine" situations
+6. 🌲 **Covers the region** - 11 counties from Spokane to Canada, Wenatchee to Idaho
 
 ## How It Works
 
@@ -170,11 +171,13 @@ wounded-animal-hotline/
 │   │   ├── contact.schema.json     # JSON Schema v1.4.0 for validation
 │   │   └── system-prompt.txt       # AI conversation prompt
 │   ├── functions/
-│   │   ├── incoming-call.js        # Call handler & ConversationRelay setup
-│   │   ├── conversation-relay.js   # Main AI conversation logic
-│   │   ├── send-sms.js             # Optional SMS follow-up
+│   │   ├── incoming-call.js        # Call handler & ConversationRelay setup (deprecated)
+│   │   ├── conversation-relay.js   # Main AI conversation logic (deprecated)
 │   │   └── helpers/
-│   │       └── contact-lookup.js   # Smart contact filtering
+│   │       ├── contact-lookup.js   # Smart contact filtering
+│   │       └── sms-formatter.js    # SMS message formatting
+│   ├── index.js                    # Main Cloudflare Worker
+│   ├── send-sms.js                 # SMS follow-up handler
 │   └── package.json                # Dependencies
 ├── BUILD_PLAN.md                   # Detailed build phases
 └── README.md                       # This file
@@ -190,7 +193,7 @@ This project is organized into **7 phases** tracked as GitHub Issues:
 4. **[Phase 4.1: Build Incoming Call Handler](../../issues/4)** - ✅ **COMPLETED**
 5. **[Phase 4.2: Build Conversation Relay Webhook](../../issues/5)** - ✅ **COMPLETED**
 6. **[Phase 4.3: Build Contact Lookup Utility](../../issues/6)** - ✅ **COMPLETED**
-7. **[Phase 4.4: Build SMS Follow-Up Handler](../../issues/7)** - 30 min (optional)
+7. **[Phase 4.4: Build SMS Follow-Up Handler](../../issues/7)** - ✅ **COMPLETED**
 8. **[Phase 5: Testing & Refinement](../../issues/8)** - 1 hour
 9. **[Phase 6: Documentation & Deployment](../../issues/9)** - 30 min
 10. **[Phase 7: Hackathon Submission](../../issues/10)** - 15 min
@@ -209,6 +212,7 @@ TWILIO_AUTH_TOKEN=your_auth_token
 ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+**Note:** SMS follow-up uses the Twilio phone number from the incoming call context (no separate env var needed).
 Set these in:
 - GitHub Secrets (for CI/CD)
 - Twilio Functions Environment Variables (for runtime)
@@ -399,7 +403,7 @@ For immediate life-threatening situations:
 
 ## Future Enhancements
 
-- [ ] SMS delivery of contact info
+- [x] SMS delivery of contact info (**IMPLEMENTED** - See [docs/SMS_FEATURE.md](docs/SMS_FEATURE.md))
 - [ ] Multi-language support (Spanish)
 - [ ] Integration with WDFW real-time data
 - [ ] Voicemail system for after-hours callbacks
